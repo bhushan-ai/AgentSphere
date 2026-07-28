@@ -1,0 +1,116 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id         String      @id @default(uuid())
+  email      String      @unique
+  name       String?
+  password   String
+  workspaces Workspace[]
+}
+
+model Workspace {
+  id        String   @id @default(uuid())
+  name      String
+  ownerId   String
+  createdAt DateTime @default(now())
+  owner     User     @relation(fields: [ownerId], references: [id])
+  agents    Agent[]
+}
+
+model Agent {
+  id           String     @id @default(uuid())
+  name         String
+  workspaceId  String
+  description  String
+  model        AIProvider
+  provider     String
+  systemPrompt String
+  temperature  Float
+
+  workspace                 Workspace                  @relation(fields: [workspaceId], references: [id])
+  createdAt                 DateTime                   @default(now())
+  conversations             Conversation[]
+  knowledgeBasedCollections KnowledgeBasedCollection[]
+
+  @@index([workspaceId])
+}
+
+model Conversation {
+  id        String    @id @default(uuid())
+  agentId   String
+  title     String
+  createdAt DateTime  @default(now())
+  messages  Message[]
+
+  agent Agent @relation(fields: [agentId], references: [id])
+
+  @@index([agentId])
+}
+
+model Message {
+  id             String   @id @default(uuid())
+  conversationId String
+  role           Role     @default(USER)
+  content        String
+  createdAt      DateTime @default(now())
+
+  conversation Conversation @relation(fields: [conversationId], references: [id])
+
+  @@index([conversationId])
+}
+
+model KnowledgeBasedCollection {
+  id        String     @id @default(uuid())
+  agentId   String
+  title     String
+  createdAt DateTime   @default(now())
+  agent     Agent      @relation(fields: [agentId], references: [id])
+  documents Document[]
+
+  @@index([agentId])
+}
+
+model Document {
+  id                         String         @id @default(uuid())
+  knowledgeBasedCollectionId String
+  fileName                   String
+  fileUrl                    String
+  status                     DocumentStatus @default(PENDING)
+  fileSize                   Int
+  createdAt                  DateTime       @default(now())
+
+  knowledgeBase KnowledgeBasedCollection @relation(fields: [knowledgeBasedCollectionId], references: [id])
+
+  @@index([knowledgeBasedCollectionId])
+}
+
+enum AIProvider {
+  OPENAI
+  GEMINI
+  GROQ
+}
+
+enum Role {
+  USER
+  ASSISTANT
+  SYSTEM
+}
+
+enum DocumentStatus {
+  PENDING
+  PROCESSING
+  READY
+  FAILED
+}
