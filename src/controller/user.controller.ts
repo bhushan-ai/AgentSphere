@@ -112,3 +112,19 @@ export const login = async (req: Request, res: Response): Promise<void> => {
       .json({ success: false, message: "Server side error", error: err });
   }
 };
+
+
+//Logout
+export const logout = async (req: Request, res: Response): Promise<void> => {
+  try {
+    res.clearCookie("accessToken");
+    res.clearCookie("refreshToken");
+    res.status(200).json({ success: true, message: "Logged out successfully" });
+  } catch (error: unknown) {
+    const err = error as Error;
+    console.log(`Something went wrong while logging out`, err);
+    res
+      .status(500)
+      .json({ success: false, message: "Server side error", error: err });
+  }
+};
