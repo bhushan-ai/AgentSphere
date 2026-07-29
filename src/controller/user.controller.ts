@@ -113,6 +113,45 @@ export const login = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
+//update
+export const updateUser = async (
+  req: Request,
+  res: Response,
+): Promise<void> => {
+  try {
+    const { name, email, password } = req.body;
+    const userId = req.user?.id;
+
+    if (!userId) {
+      res.status(404).json({ success: false, message: "User not found" });
+      return;
+    }
+
+    const hashPass = await bcrypt.hash(password, 10);
+
+    const user = await prisma.user.update({
+      where: {
+        id: userId.id,
+      },
+      data: {
+        ...(name && { name }),
+        ...(email && { email }),
+        ...(password && { password: hashPass }),
+      },
+    });
+
+    res
+      .status(200)
+      .json({ success: true, message: "user updated", data: user });
+  } catch (error: unknown) {
+    const err = error as Error;
+    console.log(`Something went wrong while updating user`, err);
+
+    res
+      .status(500)
+      .json({ success: false, message: "Server side error", error: err });
+  }
+};
 
 //Logout
 export const logout = async (req: Request, res: Response): Promise<void> => {
