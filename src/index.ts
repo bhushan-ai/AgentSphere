@@ -1,6 +1,7 @@
 import express, { type Express, type Request, type Response } from "express";
 import "dotenv/config";
 import userRouter from "./routes/user.route";
+import workspaceRouter from "./routes/workspace.route";
 const app: Express = express();
 
 app.get("/", (req: Request, res: Response) => {
@@ -8,5 +9,6 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 app.use("/api/user", userRouter);
+app.use("/api/workspace", workspaceRouter);
 
 export default app;

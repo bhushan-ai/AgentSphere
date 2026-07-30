@@ -50,6 +50,11 @@ export type User = Prisma.UserModel
  */
 export type Workspace = Prisma.WorkspaceModel
 /**
+ * Model WorkspaceMember
+ * 
+ */
+export type WorkspaceMember = Prisma.WorkspaceMemberModel
+/**
  * Model Agent
  * 
  */

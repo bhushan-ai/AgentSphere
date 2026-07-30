@@ -13,20 +13,36 @@ datasource db {
 }
 
 model User {
-  id         String      @id @default(uuid())
-  email      String      @unique
-  name       String?
-  password   String
-  workspaces Workspace[]
+  id               String            @id @default(uuid())
+  email            String            @unique
+  name             String?
+  password         String
+  workspaces       Workspace[]
+  workspaceMembers WorkspaceMember[]
 }
 
 model Workspace {
-  id        String   @id @default(uuid())
-  name      String
-  ownerId   String
-  createdAt DateTime @default(now())
-  owner     User     @relation(fields: [ownerId], references: [id])
-  agents    Agent[]
+  id               String            @id @default(uuid())
+  name             String
+  ownerId          String
+  createdAt        DateTime          @default(now())
+  owner            User              @relation(fields: [ownerId], references: [id])
+  agents           Agent[]
+  workspaceMembers WorkspaceMember[]
+}
+
+model WorkspaceMember {
+  id          String        @id @default(uuid())
+  workspaceId String
+  userId      String
+  role        WorkspaceRole @default(MEMBER)
+  joinedAt    DateTime      @default(now())
+
+  workspace Workspace @relation(fields: [workspaceId], references: [id])
+  user      User      @relation(fields: [userId], references: [id])
+
+  @@index([workspaceId])
+  @@index([userId])
 }
 
 model Agent {
@@ -94,6 +110,12 @@ model Document {
   knowledgeBase KnowledgeBasedCollection @relation(fields: [knowledgeBasedCollectionId], references: [id])
 
   @@index([knowledgeBasedCollectionId])
+}
+
+enum WorkspaceRole {
+  OWNER
+  ADMIN
+  MEMBER
 }
 
 enum AIProvider {
