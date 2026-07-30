@@ -551,7 +551,7 @@ This project is licensed under the **MIT License**.
 **Bhushan Ingole**
 
 - GitHub: https://github.com/bhushan-ai
-- LinkedIn: https://www.linkedin.com/in/bhushan-ingole/
+- LinkedIn: https://www.linkedin.com/in/bhushan-ai/
 
 ---
 
