@@ -41,8 +41,7 @@ model WorkspaceMember {
   workspace Workspace @relation(fields: [workspaceId], references: [id])
   user      User      @relation(fields: [userId], references: [id])
 
-  @@index([workspaceId])
-  @@index([userId])
+  @@unique([workspaceId, userId])
 }
 
 model Agent {
@@ -122,6 +121,7 @@ enum AIProvider {
   OPENAI
   GEMINI
   GROQ
+  ANTHROPIC
 }
 
 enum Role {

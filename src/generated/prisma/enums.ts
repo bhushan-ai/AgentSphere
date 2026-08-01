@@ -21,7 +21,8 @@ export type WorkspaceRole = (typeof WorkspaceRole)[keyof typeof WorkspaceRole]
 export const AIProvider = {
   OPENAI: 'OPENAI',
   GEMINI: 'GEMINI',
-  GROQ: 'GROQ'
+  GROQ: 'GROQ',
+  ANTHROPIC: 'ANTHROPIC'
 } as const
 
 export type AIProvider = (typeof AIProvider)[keyof typeof AIProvider]
