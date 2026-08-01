@@ -1,7 +1,7 @@
 services:
   redis:
     image: redis:latest
-    container_name: redis-chat-app
+    container_name: redis-agentSphere
     ports:
       - "6379:6379"
 
