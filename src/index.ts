@@ -5,6 +5,12 @@ import workspaceRouter from "./routes/workspace.route";
 import agentRouter from "./routes/agent.route";
 const app: Express = express();
 
+
+//middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello World!");
 });
