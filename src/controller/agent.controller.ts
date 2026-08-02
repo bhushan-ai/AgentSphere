@@ -2,6 +2,119 @@ import { Request, Response } from "express";
 import { prisma } from "../lib/prisma";
 import { requireWorkspaceRole } from "../middleware/checkRole";
 
+//get all agents in a workspace
+export const getAgents = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const workspaceId = req.params.workspaceId;
+    const userId = req.user?.id;
+
+    if (!userId) {
+      res.status(401).json({ message: "Unauthorized" });
+      return;
+    }
+
+    if (!workspaceId) {
+      res.status(400).json({ message: "Missing workspaceId" });
+      return;
+    }
+
+    // Check if the user is an admin or owner of the workspace
+    await requireWorkspaceRole(workspaceId as string, userId, [
+      "OWNER",
+      "ADMIN",
+      "MEMBER",
+    ]);
+
+    const agents = await prisma.agent.findMany({
+      where: {
+        workspaceId: workspaceId as string,
+      },
+      select: {
+        id: true,
+        name: true,
+        provider: true,
+        model: true,
+        createdAt: true,
+      },
+    });
+
+    res.status(200).json({
+      success: true,
+      message: "Agents fetched successfully",
+      data: agents,
+    });
+  } catch (error: unknown) {
+    const err = error as Error;
+    console.log(`Something went wrong while fetching agents`, err);
+    res
+      .status(500)
+      .json({ success: false, message: "Server side error", error: err });
+  }
+};
+
+//get an agent by id
+export const getAgentsById = async (
+  req: Request,
+  res: Response,
+): Promise<void> => {
+  try {
+    const agentId = req.params.agentId;
+    const userId = req.user?.id;
+
+    if (!userId) {
+      res.status(401).json({ message: "Unauthorized" });
+      return;
+    }
+
+    if (!agentId) {
+      res.status(400).json({ message: "Missing agentId" });
+      return;
+    }
+
+    //check  agent  existence
+    const agent = await prisma.agent.findUnique({
+      where: {
+        id: agentId as string,
+      },
+      select: {
+        id: true,
+        name: true,
+        description: true,
+        workspaceId: true,
+        model: true,
+        provider: true,
+        systemPrompt: true,
+        temperature: true,
+        createdAt: true,
+      },
+    });
+
+    if (!agent) {
+      res.status(404).json({ message: "Agent not found" });
+      return;
+    }
+
+    // Check if the user is an admin or owner of the workspace
+    await requireWorkspaceRole(agent.workspaceId as string, userId, [
+      "OWNER",
+      "ADMIN",
+      "MEMBER",
+    ]);
+
+    res.status(200).json({
+      success: true,
+      message: "Agent fetched successfully",
+      data: agent,
+    });
+  } catch (error: unknown) {
+    const err = error as Error;
+    console.log(`Something went wrong while fetching agent`, err);
+    res
+      .status(500)
+      .json({ success: false, message: "Server side error", error: err });
+  }
+};
+
 //create an agent
 export const createAgent = async (
   req: Request,
@@ -194,6 +307,65 @@ export const updateAgent = async (
   } catch (error: unknown) {
     const err = error as Error;
     console.log(`Something went wrong while updating agent`, err);
+    res
+      .status(500)
+      .json({ success: false, message: "Server side error", error: err });
+  }
+};
+
+//delete an agent
+export const deleteAgent = async (
+  req: Request,
+  res: Response,
+): Promise<void> => {
+  try {
+    const userId = req.user?.id;
+    const agentId = req.params.agentId;
+
+    if (!userId) {
+      res.status(401).json({ message: "Unauthorized" });
+      return;
+    }
+
+    if (!agentId) {
+      res.status(400).json({ message: "Missing agentId" });
+      return;
+    }
+
+    //check  agent  existence
+    const agent = await prisma.agent.findUnique({
+      where: {
+        id: agentId as string,
+      },
+      select: {
+        workspaceId: true,
+      },
+    });
+
+    if (!agent) {
+      res.status(404).json({ message: "Agent not found" });
+      return;
+    }
+
+    // Check if the user is an admin or owner of the workspace
+    await requireWorkspaceRole(agent.workspaceId as string, userId, [
+      "OWNER",
+      "ADMIN",
+    ]);
+
+    await prisma.agent.delete({
+      where: {
+        id: agentId as string,
+      },
+    });
+
+    res.status(204).json({
+      success: true,
+      message: "Agent deleted successfully",
+    });
+  } catch (error: unknown) {
+    const err = error as Error;
+    console.log(`Something went wrong while deleting agent`, err);
     res
       .status(500)
       .json({ success: false, message: "Server side error", error: err });
