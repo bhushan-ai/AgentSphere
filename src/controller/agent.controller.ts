@@ -113,3 +113,89 @@ export const createAgent = async (
       .json({ success: false, message: "Server side error", error: err });
   }
 };
+
+//update an agent
+export const updateAgent = async (
+  req: Request,
+  res: Response,
+): Promise<void> => {
+  try {
+    const { name, description, model, provider, systemPrompt, temperature } =
+      req.body;
+
+    const userId = req.user?.id;
+    const agentId = req.params.agentId;
+
+    if (!userId) {
+      res.status(401).json({ message: "Unauthorized" });
+      return;
+    }
+
+    if (!agentId) {
+      res.status(400).json({ message: "Missing agentId" });
+      return;
+    }
+
+    if ((temperature !== undefined && temperature < 0) || temperature > 2) {
+      res.status(400).json({
+        message: "Invalid temperature value. Must be between 0 and 2.",
+      });
+      return;
+    }
+
+    // Validate Providers
+    const validProviders = ["OPENAI", "GEMINI", "GROQ", "ANTHROPIC"];
+
+    if (provider && !validProviders.includes(provider)) {
+      res.status(400).json({
+        message:
+          "Invalid provider value. Must be one of: OPENAI, GEMINI, GROQ, ANTHROPIC",
+      });
+      return;
+    }
+
+    //check  agent  existence
+    const agent = await prisma.agent.findUnique({
+      where: {
+        id: agentId as string,
+      },
+    });
+
+    if (!agent) {
+      res.status(404).json({ message: "Agent not found" });
+      return;
+    }
+
+    // Check if the user is an admin or owner of the workspace
+    await requireWorkspaceRole(agent.workspaceId as string, userId, [
+      "OWNER",
+      "ADMIN",
+    ]);
+
+    const updatedAgent = await prisma.agent.update({
+      where: {
+        id: agentId as string,
+      },
+      data: {
+        ...(name && { name: name?.trim() }),
+        ...(description && { description: description?.trim() }),
+        ...(model && { model }),
+        ...(provider && { provider }),
+        ...(systemPrompt && { systemPrompt: systemPrompt?.trim() }),
+        ...(temperature !== undefined && { temperature }),
+      },
+    });
+
+    res.status(200).json({
+      success: true,
+      message: "Agent updated successfully",
+      data: updatedAgent,
+    });
+  } catch (error: unknown) {
+    const err = error as Error;
+    console.log(`Something went wrong while updating agent`, err);
+    res
+      .status(500)
+      .json({ success: false, message: "Server side error", error: err });
+  }
+};
