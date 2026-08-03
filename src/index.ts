@@ -3,13 +3,13 @@ import "dotenv/config";
 import userRouter from "./routes/user.route";
 import workspaceRouter from "./routes/workspace.route";
 import agentRouter from "./routes/agent.route";
-const app: Express = express();
+import conversationRouter from "./routes/conversation.route";
 
+const app: Express = express();
 
 //middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello World!");
@@ -18,5 +18,6 @@ app.get("/", (req: Request, res: Response) => {
 app.use("/api/user", userRouter);
 app.use("/api/workspace", workspaceRouter);
 app.use("/api/agent", agentRouter);
+app.use("/api/conversation", conversationRouter);
 
 export default app;

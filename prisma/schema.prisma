@@ -19,6 +19,7 @@ model User {
   password         String
   workspaces       Workspace[]
   workspaceMembers WorkspaceMember[]
+  conversations    Conversation[]
 }
 
 model Workspace {
@@ -69,7 +70,10 @@ model Conversation {
   createdAt DateTime  @default(now())
   messages  Message[]
 
-  agent Agent @relation(fields: [agentId], references: [id])
+  agent     Agent  @relation(fields: [agentId], references: [id])
+  createdBy String
+
+  user User @relation(fields: [createdBy], references: [id])
 
   @@index([agentId])
 }
