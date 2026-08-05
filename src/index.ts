@@ -5,6 +5,7 @@ import workspaceRouter from "./routes/workspace.route";
 import agentRouter from "./routes/agent.route";
 import conversationRouter from "./routes/conversation.route";
 import messageRouter from "./routes/message.route";
+import knowledgeRouter from "./routes/knowledgeBased.route";
 
 const app: Express = express();
 
@@ -21,5 +22,6 @@ app.use("/api/workspace", workspaceRouter);
 app.use("/api/agent", agentRouter);
 app.use("/api/conversation", conversationRouter);
 app.use("/api/message", messageRouter);
+app.use("/api/knowledgeBased", knowledgeRouter);
 
 export default app;
