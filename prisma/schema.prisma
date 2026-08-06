@@ -88,7 +88,7 @@ model Message {
   createdAt      DateTime @default(now())
 
   conversation Conversation @relation(fields: [conversationId], references: [id])
-  sender       User         @relation(fields: [senderId], references: [id])
+  sender       User         @relation(fields: [senderId], references: [id   ])
 
   @@index([conversationId])
 }
