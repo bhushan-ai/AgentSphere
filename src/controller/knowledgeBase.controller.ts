@@ -76,7 +76,7 @@ export const createDocument = async (
   res: Response,
 ): Promise<void> => {
   try {
-    const { fileName, fileSize, fileUrl } = req.body;
+    const { fileName, fileSize, fileUrl, key } = req.body;
     const knowledgeBaseId = req.params.knowledgeBaseId;
     const userId = req.user?.id;
 
@@ -138,6 +138,7 @@ export const createDocument = async (
         fileName: fileName,
         fileSize: fileSize,
         fileUrl: fileUrl,
+        key: key,
         status: "PENDING",
         knowledgeBase: {
           connect: {
@@ -154,6 +155,11 @@ export const createDocument = async (
         documentId: document.id,
       },
       {
+        attempts: 3,
+        backoff: {
+          type: "exponential",
+          delay: 5000,
+        },
         removeOnComplete: true,
       },
     );

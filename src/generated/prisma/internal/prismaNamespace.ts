@@ -1141,6 +1141,7 @@ export const DocumentScalarFieldEnum = {
   fileUrl: 'fileUrl',
   status: 'status',
   fileSize: 'fileSize',
+  key: 'key',
   createdAt: 'createdAt'
 } as const
 

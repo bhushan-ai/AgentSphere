@@ -41,6 +41,7 @@ export type DocumentMinAggregateOutputType = {
   fileUrl: string | null
   status: $Enums.DocumentStatus | null
   fileSize: number | null
+  key: string | null
   createdAt: Date | null
 }
 
@@ -51,6 +52,7 @@ export type DocumentMaxAggregateOutputType = {
   fileUrl: string | null
   status: $Enums.DocumentStatus | null
   fileSize: number | null
+  key: string | null
   createdAt: Date | null
 }
 
@@ -61,6 +63,7 @@ export type DocumentCountAggregateOutputType = {
   fileUrl: number
   status: number
   fileSize: number
+  key: number
   createdAt: number
   _all: number
 }
@@ -81,6 +84,7 @@ export type DocumentMinAggregateInputType = {
   fileUrl?: true
   status?: true
   fileSize?: true
+  key?: true
   createdAt?: true
 }
 
@@ -91,6 +95,7 @@ export type DocumentMaxAggregateInputType = {
   fileUrl?: true
   status?: true
   fileSize?: true
+  key?: true
   createdAt?: true
 }
 
@@ -101,6 +106,7 @@ export type DocumentCountAggregateInputType = {
   fileUrl?: true
   status?: true
   fileSize?: true
+  key?: true
   createdAt?: true
   _all?: true
 }
@@ -198,6 +204,7 @@ export type DocumentGroupByOutputType = {
   fileUrl: string
   status: $Enums.DocumentStatus
   fileSize: number
+  key: string
   createdAt: Date
   _count: DocumentCountAggregateOutputType | null
   _avg: DocumentAvgAggregateOutputType | null
@@ -231,6 +238,7 @@ export type DocumentWhereInput = {
   fileUrl?: Prisma.StringFilter<"Document"> | string
   status?: Prisma.EnumDocumentStatusFilter<"Document"> | $Enums.DocumentStatus
   fileSize?: Prisma.IntFilter<"Document"> | number
+  key?: Prisma.StringFilter<"Document"> | string
   createdAt?: Prisma.DateTimeFilter<"Document"> | Date | string
   knowledgeBase?: Prisma.XOR<Prisma.KnowledgeBasedCollectionScalarRelationFilter, Prisma.KnowledgeBasedCollectionWhereInput>
 }
@@ -242,6 +250,7 @@ export type DocumentOrderByWithRelationInput = {
   fileUrl?: Prisma.SortOrder
   status?: Prisma.SortOrder
   fileSize?: Prisma.SortOrder
+  key?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   knowledgeBase?: Prisma.KnowledgeBasedCollectionOrderByWithRelationInput
 }
@@ -256,6 +265,7 @@ export type DocumentWhereUniqueInput = Prisma.AtLeast<{
   fileUrl?: Prisma.StringFilter<"Document"> | string
   status?: Prisma.EnumDocumentStatusFilter<"Document"> | $Enums.DocumentStatus
   fileSize?: Prisma.IntFilter<"Document"> | number
+  key?: Prisma.StringFilter<"Document"> | string
   createdAt?: Prisma.DateTimeFilter<"Document"> | Date | string
   knowledgeBase?: Prisma.XOR<Prisma.KnowledgeBasedCollectionScalarRelationFilter, Prisma.KnowledgeBasedCollectionWhereInput>
 }, "id">
@@ -267,6 +277,7 @@ export type DocumentOrderByWithAggregationInput = {
   fileUrl?: Prisma.SortOrder
   status?: Prisma.SortOrder
   fileSize?: Prisma.SortOrder
+  key?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.DocumentCountOrderByAggregateInput
   _avg?: Prisma.DocumentAvgOrderByAggregateInput
@@ -285,6 +296,7 @@ export type DocumentScalarWhereWithAggregatesInput = {
   fileUrl?: Prisma.StringWithAggregatesFilter<"Document"> | string
   status?: Prisma.EnumDocumentStatusWithAggregatesFilter<"Document"> | $Enums.DocumentStatus
   fileSize?: Prisma.IntWithAggregatesFilter<"Document"> | number
+  key?: Prisma.StringWithAggregatesFilter<"Document"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Document"> | Date | string
 }
 
@@ -294,6 +306,7 @@ export type DocumentCreateInput = {
   fileUrl: string
   status?: $Enums.DocumentStatus
   fileSize: number
+  key: string
   createdAt?: Date | string
   knowledgeBase: Prisma.KnowledgeBasedCollectionCreateNestedOneWithoutDocumentsInput
 }
@@ -305,6 +318,7 @@ export type DocumentUncheckedCreateInput = {
   fileUrl: string
   status?: $Enums.DocumentStatus
   fileSize: number
+  key: string
   createdAt?: Date | string
 }
 
@@ -314,6 +328,7 @@ export type DocumentUpdateInput = {
   fileUrl?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumDocumentStatusFieldUpdateOperationsInput | $Enums.DocumentStatus
   fileSize?: Prisma.IntFieldUpdateOperationsInput | number
+  key?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   knowledgeBase?: Prisma.KnowledgeBasedCollectionUpdateOneRequiredWithoutDocumentsNestedInput
 }
@@ -325,6 +340,7 @@ export type DocumentUncheckedUpdateInput = {
   fileUrl?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumDocumentStatusFieldUpdateOperationsInput | $Enums.DocumentStatus
   fileSize?: Prisma.IntFieldUpdateOperationsInput | number
+  key?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -335,6 +351,7 @@ export type DocumentCreateManyInput = {
   fileUrl: string
   status?: $Enums.DocumentStatus
   fileSize: number
+  key: string
   createdAt?: Date | string
 }
 
@@ -344,6 +361,7 @@ export type DocumentUpdateManyMutationInput = {
   fileUrl?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumDocumentStatusFieldUpdateOperationsInput | $Enums.DocumentStatus
   fileSize?: Prisma.IntFieldUpdateOperationsInput | number
+  key?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -354,6 +372,7 @@ export type DocumentUncheckedUpdateManyInput = {
   fileUrl?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumDocumentStatusFieldUpdateOperationsInput | $Enums.DocumentStatus
   fileSize?: Prisma.IntFieldUpdateOperationsInput | number
+  key?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -374,6 +393,7 @@ export type DocumentCountOrderByAggregateInput = {
   fileUrl?: Prisma.SortOrder
   status?: Prisma.SortOrder
   fileSize?: Prisma.SortOrder
+  key?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -388,6 +408,7 @@ export type DocumentMaxOrderByAggregateInput = {
   fileUrl?: Prisma.SortOrder
   status?: Prisma.SortOrder
   fileSize?: Prisma.SortOrder
+  key?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -398,6 +419,7 @@ export type DocumentMinOrderByAggregateInput = {
   fileUrl?: Prisma.SortOrder
   status?: Prisma.SortOrder
   fileSize?: Prisma.SortOrder
+  key?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -465,6 +487,7 @@ export type DocumentCreateWithoutKnowledgeBaseInput = {
   fileUrl: string
   status?: $Enums.DocumentStatus
   fileSize: number
+  key: string
   createdAt?: Date | string
 }
 
@@ -474,6 +497,7 @@ export type DocumentUncheckedCreateWithoutKnowledgeBaseInput = {
   fileUrl: string
   status?: $Enums.DocumentStatus
   fileSize: number
+  key: string
   createdAt?: Date | string
 }
 
@@ -513,6 +537,7 @@ export type DocumentScalarWhereInput = {
   fileUrl?: Prisma.StringFilter<"Document"> | string
   status?: Prisma.EnumDocumentStatusFilter<"Document"> | $Enums.DocumentStatus
   fileSize?: Prisma.IntFilter<"Document"> | number
+  key?: Prisma.StringFilter<"Document"> | string
   createdAt?: Prisma.DateTimeFilter<"Document"> | Date | string
 }
 
@@ -522,6 +547,7 @@ export type DocumentCreateManyKnowledgeBaseInput = {
   fileUrl: string
   status?: $Enums.DocumentStatus
   fileSize: number
+  key: string
   createdAt?: Date | string
 }
 
@@ -531,6 +557,7 @@ export type DocumentUpdateWithoutKnowledgeBaseInput = {
   fileUrl?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumDocumentStatusFieldUpdateOperationsInput | $Enums.DocumentStatus
   fileSize?: Prisma.IntFieldUpdateOperationsInput | number
+  key?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -540,6 +567,7 @@ export type DocumentUncheckedUpdateWithoutKnowledgeBaseInput = {
   fileUrl?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumDocumentStatusFieldUpdateOperationsInput | $Enums.DocumentStatus
   fileSize?: Prisma.IntFieldUpdateOperationsInput | number
+  key?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -549,6 +577,7 @@ export type DocumentUncheckedUpdateManyWithoutKnowledgeBaseInput = {
   fileUrl?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumDocumentStatusFieldUpdateOperationsInput | $Enums.DocumentStatus
   fileSize?: Prisma.IntFieldUpdateOperationsInput | number
+  key?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -561,6 +590,7 @@ export type DocumentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   fileUrl?: boolean
   status?: boolean
   fileSize?: boolean
+  key?: boolean
   createdAt?: boolean
   knowledgeBase?: boolean | Prisma.KnowledgeBasedCollectionDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["document"]>
@@ -572,6 +602,7 @@ export type DocumentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   fileUrl?: boolean
   status?: boolean
   fileSize?: boolean
+  key?: boolean
   createdAt?: boolean
   knowledgeBase?: boolean | Prisma.KnowledgeBasedCollectionDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["document"]>
@@ -583,6 +614,7 @@ export type DocumentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   fileUrl?: boolean
   status?: boolean
   fileSize?: boolean
+  key?: boolean
   createdAt?: boolean
   knowledgeBase?: boolean | Prisma.KnowledgeBasedCollectionDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["document"]>
@@ -594,10 +626,11 @@ export type DocumentSelectScalar = {
   fileUrl?: boolean
   status?: boolean
   fileSize?: boolean
+  key?: boolean
   createdAt?: boolean
 }
 
-export type DocumentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "knowledgeBasedCollectionId" | "fileName" | "fileUrl" | "status" | "fileSize" | "createdAt", ExtArgs["result"]["document"]>
+export type DocumentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "knowledgeBasedCollectionId" | "fileName" | "fileUrl" | "status" | "fileSize" | "key" | "createdAt", ExtArgs["result"]["document"]>
 export type DocumentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   knowledgeBase?: boolean | Prisma.KnowledgeBasedCollectionDefaultArgs<ExtArgs>
 }
@@ -620,6 +653,7 @@ export type $DocumentPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     fileUrl: string
     status: $Enums.DocumentStatus
     fileSize: number
+    key: string
     createdAt: Date
   }, ExtArgs["result"]["document"]>
   composites: {}
@@ -1051,6 +1085,7 @@ export interface DocumentFieldRefs {
   readonly fileUrl: Prisma.FieldRef<"Document", 'String'>
   readonly status: Prisma.FieldRef<"Document", 'DocumentStatus'>
   readonly fileSize: Prisma.FieldRef<"Document", 'Int'>
+  readonly key: Prisma.FieldRef<"Document", 'String'>
   readonly createdAt: Prisma.FieldRef<"Document", 'DateTime'>
 }
     
