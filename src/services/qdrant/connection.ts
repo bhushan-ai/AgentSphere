@@ -1,5 +1,6 @@
 import { QdrantVectorStore } from "@langchain/qdrant";
 import { GoogleGenerativeAIEmbeddings } from "@langchain/google-genai";
+import { QdrantClient } from "@qdrant/js-client-rest";
 
 // creating embedding
 const embeddings = new GoogleGenerativeAIEmbeddings({
@@ -13,4 +14,6 @@ export const vectorStore = new QdrantVectorStore(embeddings, {
   collectionName: "agent-sphere",
 });
 
-
+export const qdrantClient = new QdrantClient({
+  url: process.env.QDRANT_URL!,
+});

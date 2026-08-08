@@ -1,11 +1,17 @@
 import { Request, Response } from "express";
 import { prisma } from "../lib/prisma";
 import { randomUUID } from "crypto";
-import { GetObjectCommand, PutObjectCommand } from "@aws-sdk/client-s3";
+import {
+  DeleteObjectCommand,
+  GetObjectCommand,
+  PutObjectCommand,
+} from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { requireWorkspaceRole } from "../middleware/checkRole";
 import { s3Client } from "../services/aws/s3";
 import { documentQueue } from "../services/queue";
+import { qdrantClient, vectorStore } from "../services/qdrant/connection";
+import { match } from "assert";
 
 //create presigned url
 export const createPreSignedUrl = async (req: Request, res: Response) => {
@@ -172,6 +178,174 @@ export const createDocument = async (
   } catch (error: unknown) {
     const err = error as Error;
     console.log(`Something went wrong while creating the document`, err);
+    res.status(500).json({
+      success: false,
+      message: "Server side error",
+      error: err.message,
+    });
+  }
+};
+
+//get docs
+export const getDocuments = async (req: Request, res: Response) => {
+  try {
+    const userId = req.user?.id;
+    const knowledgeBaseId = req.params.knowledgeBaseId;
+
+    if (!userId) {
+      res.status(401).json({ success: false, message: "Unauthorized" });
+      return;
+    }
+
+    if (!knowledgeBaseId) {
+      res
+        .status(400)
+        .json({ success: false, message: "knowledgeBaseId is required" });
+      return;
+    }
+
+    //check knowledgeBase collection exist or not
+    const knowledgeBaseCollection =
+      await prisma.knowledgeBasedCollection.findUnique({
+        where: {
+          id: knowledgeBaseId as string,
+        },
+        include: {
+          agent: {
+            select: {
+              workspaceId: true,
+            },
+          },
+        },
+      });
+
+    if (!knowledgeBaseCollection) {
+      res.status(404).json({
+        success: false,
+        message: "knowledgeBaseCollection not found ",
+      });
+      return;
+    }
+
+    await requireWorkspaceRole(
+      knowledgeBaseCollection?.agent.workspaceId,
+      userId,
+      ["OWNER", "ADMIN", "MEMBER"],
+    );
+
+    const documents = await prisma.document.findMany({
+      where: {
+       knowledgeBasedCollectionId: knowledgeBaseId  as string,
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+
+    res.status(200).json({
+      success: true,
+      message: "Documents fetched successfully",
+      data: documents,
+    });
+  } catch (error: unknown) {
+    const err = error as Error;
+    console.log(`Something went wrong while getting the documents`, err);
+    res.status(500).json({
+      success: false,
+      message: "Server side error",
+      error: err.message,
+    });
+  }
+};
+
+//del doc
+export const deleteDocument = async (req: Request, res: Response) => {
+  try {
+    const userId = req.user?.id;
+    const documentId = req.params.documentId;
+
+    if (!userId) {
+      res.status(401).json({ success: false, message: "Unauthorized" });
+      return;
+    }
+
+    if (!documentId) {
+      res.status(400).json({
+        success: false,
+        message: "documentId is required",
+      });
+      return;
+    }
+
+    //check doc exit or not
+    const document = await prisma.document.findUnique({
+      where: {
+        id: documentId as string,
+      },
+      include: {
+        knowledgeBase: {
+          include: {
+            agent: {
+              select: {
+                workspaceId: true,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    if (!document) {
+      res.status(404).json({
+        success: false,
+        message: "document not found ",
+      });
+      return;
+    }
+
+    //check role
+    await requireWorkspaceRole(
+      document.knowledgeBase?.agent.workspaceId,
+      userId,
+      ["OWNER", "ADMIN", "MEMBER"],
+    );
+
+    //deleting doc from qdrant
+    await qdrantClient.delete("agent-sphere", {
+      filter: {
+        must: [
+          {
+            key: "metadata.documentId",
+            match: {
+              value: documentId,
+            },
+          },
+        ],
+      },
+    });
+
+    //deleting from aws
+    const cmd = new DeleteObjectCommand({
+      Bucket: process.env.AWS_BUCKET_NAME!,
+      Key: document.key,
+    });
+
+    await s3Client.send(cmd);
+
+    //deleting from postgres
+    await prisma.document.delete({
+      where: {
+        id: documentId as string,
+      },
+    });
+
+    res.status(200).json({
+      success: true,
+      message: "Document deleted successfully",
+    });
+  } catch (error: unknown) {
+    const err = error as Error;
+    console.log(`Something went wrong while deleting the document`, err);
     res.status(500).json({
       success: false,
       message: "Server side error",
