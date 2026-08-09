@@ -145,6 +145,13 @@ export type FloatFilter<$PrismaModel = never> = {
   not?: Prisma.NestedFloatFilter<$PrismaModel> | number
 }
 
+export type EnumAgentTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.AgentType | Prisma.EnumAgentTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.AgentType[] | Prisma.ListEnumAgentTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.AgentType[] | Prisma.ListEnumAgentTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumAgentTypeFilter<$PrismaModel> | $Enums.AgentType
+}
+
 export type EnumAIProviderWithAggregatesFilter<$PrismaModel = never> = {
   equals?: $Enums.AIProvider | Prisma.EnumAIProviderFieldRefInput<$PrismaModel>
   in?: $Enums.AIProvider[] | Prisma.ListEnumAIProviderFieldRefInput<$PrismaModel>
@@ -169,6 +176,16 @@ export type FloatWithAggregatesFilter<$PrismaModel = never> = {
   _sum?: Prisma.NestedFloatFilter<$PrismaModel>
   _min?: Prisma.NestedFloatFilter<$PrismaModel>
   _max?: Prisma.NestedFloatFilter<$PrismaModel>
+}
+
+export type EnumAgentTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.AgentType | Prisma.EnumAgentTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.AgentType[] | Prisma.ListEnumAgentTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.AgentType[] | Prisma.ListEnumAgentTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumAgentTypeWithAggregatesFilter<$PrismaModel> | $Enums.AgentType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumAgentTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumAgentTypeFilter<$PrismaModel>
 }
 
 export type EnumRoleFilter<$PrismaModel = never> = {
@@ -376,6 +393,13 @@ export type NestedFloatFilter<$PrismaModel = never> = {
   not?: Prisma.NestedFloatFilter<$PrismaModel> | number
 }
 
+export type NestedEnumAgentTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.AgentType | Prisma.EnumAgentTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.AgentType[] | Prisma.ListEnumAgentTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.AgentType[] | Prisma.ListEnumAgentTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumAgentTypeFilter<$PrismaModel> | $Enums.AgentType
+}
+
 export type NestedEnumAIProviderWithAggregatesFilter<$PrismaModel = never> = {
   equals?: $Enums.AIProvider | Prisma.EnumAIProviderFieldRefInput<$PrismaModel>
   in?: $Enums.AIProvider[] | Prisma.ListEnumAIProviderFieldRefInput<$PrismaModel>
@@ -400,6 +424,16 @@ export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
   _sum?: Prisma.NestedFloatFilter<$PrismaModel>
   _min?: Prisma.NestedFloatFilter<$PrismaModel>
   _max?: Prisma.NestedFloatFilter<$PrismaModel>
+}
+
+export type NestedEnumAgentTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.AgentType | Prisma.EnumAgentTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.AgentType[] | Prisma.ListEnumAgentTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.AgentType[] | Prisma.ListEnumAgentTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumAgentTypeWithAggregatesFilter<$PrismaModel> | $Enums.AgentType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumAgentTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumAgentTypeFilter<$PrismaModel>
 }
 
 export type NestedEnumRoleFilter<$PrismaModel = never> = {

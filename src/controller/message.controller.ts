@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import { prisma } from "../lib/prisma";
 import { requireWorkspaceRole } from "../middleware/checkRole";
+import { QdrantVectorStore } from "@langchain/qdrant";
+import { ai, embeddings, qdrantClient } from "../services/qdrant/connection";
 
 //send message
 export const sendMessage = async (
@@ -40,7 +42,13 @@ export const sendMessage = async (
       include: {
         agent: {
           select: {
+            id: true,
             workspaceId: true,
+            type: true,
+            systemPrompt: true,
+            model: true,
+            provider: true,
+            temperature: true,
           },
         },
       },
@@ -68,11 +76,133 @@ export const sendMessage = async (
       },
     });
 
-    res.status(201).json({
-      success: true,
-      message: "Message sent successfully",
-      data: message,
+    const agent = conversation.agent;
+
+    let context = "";
+    const history = await prisma.message.findMany({
+      where: {
+        conversationId: conversation.id,
+        id: {
+          not: message.id,
+        },
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+      take: 20,
     });
+
+    const formattedHistory = history.reverse()
+      .map((msg) => `${msg.role}: ${msg.content}`)
+      .join("\n");
+
+    //BY checking type of agent sending responses
+    if (agent.type === "CONVERSATIONAL") {
+      context = `Conversation History: ${formattedHistory}`;
+    }
+
+    if (agent.type === "KNOWLEDGE_BASE") {
+      // history → question → embedding → Qdrant → context → LLM
+      const knowledgeBase = await prisma.knowledgeBasedCollection.findFirst({
+        where: {
+          agentId: conversation.agentId,
+        },
+      });
+
+      if (!knowledgeBase) {
+        throw new Error("Knowledge base not found");
+      }
+
+      //retrieve from qdrant
+      const vectorStore = await QdrantVectorStore.fromExistingCollection(
+        embeddings,
+        {
+          client: qdrantClient,
+          collectionName: "agent-sphere",
+        },
+      );
+
+      const vectorSearcher = vectorStore.asRetriever({
+        k: 3,
+        filter: {
+          must: [
+            {
+              key: "metadata.knowledgeBaseId",
+              match: {
+                value: knowledgeBase.id,
+              },
+            },
+          ],
+        },
+      });
+
+      const relevantChunks = await vectorSearcher.invoke(message.content);
+
+      const contextFromChunks = relevantChunks
+        .map((doc) => {
+          return ` 
+        Sources: ${doc.metadata.fileName ?? "unknown"}
+        Page: ${doc.metadata.loc?.pageNumber ?? "N/M"}
+        Content:
+          ${doc.pageContent}`;
+        })
+        .join("\n\n");
+
+      context = `
+        Use the following retrieved context to answer the user's question.
+         Context: ${contextFromChunks}
+         Conversation History: ${formattedHistory}
+        `;
+    }
+
+    const prompt = `${context}
+
+  Current Question:
+  ${message.content}
+    `;
+
+    // //llm integration
+    const responseStream = await ai.models.generateContentStream({
+      model: agent.model,
+      config: {
+        systemInstruction: agent.systemPrompt,
+        temperature: agent.temperature,
+      },
+
+      contents: [
+        {
+          role: "user",
+          parts: [
+            {
+              text: `${prompt} `,
+            },
+          ],
+        },
+      ],
+    });
+
+    let assistantContent = "";
+
+    res.status(200);
+    res.setHeader("Content-Type", "text/plain; charset=utf-8");
+
+    for await (const chunks of responseStream) {
+      const text = chunks.text;
+      if (text) {
+        assistantContent += text;
+        res.write(text);
+      }
+    }
+
+    await prisma.message.create({
+      data: {
+        conversationId: conversationId as string,
+        content: assistantContent,
+        role: "ASSISTANT",
+      },
+    });
+
+    res.end();
   } catch (error: unknown) {
     const err = error as Error;
     console.log(`Something went wrong while sending message`, err);

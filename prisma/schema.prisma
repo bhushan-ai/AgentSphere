@@ -55,6 +55,7 @@ model Agent {
   provider     String
   systemPrompt String
   temperature  Float
+  type         AgentType
 
   workspace                 Workspace                  @relation(fields: [workspaceId], references: [id])
   createdAt                 DateTime                   @default(now())
@@ -84,11 +85,11 @@ model Message {
   conversationId String
   role           Role     @default(USER)
   content        String
-  senderId       String
+  senderId       String?
   createdAt      DateTime @default(now())
 
   conversation Conversation @relation(fields: [conversationId], references: [id])
-  sender       User         @relation(fields: [senderId], references: [id])
+  sender       User?        @relation(fields: [senderId], references: [id])
 
   @@index([conversationId])
 }
@@ -144,4 +145,9 @@ enum DocumentStatus {
   PROCESSING
   READY
   FAILED
+}
+
+enum AgentType {
+  CONVERSATIONAL
+  KNOWLEDGE_BASE
 }

@@ -117,6 +117,7 @@ export const AgentScalarFieldEnum = {
   provider: 'provider',
   systemPrompt: 'systemPrompt',
   temperature: 'temperature',
+  type: 'type',
   createdAt: 'createdAt'
 } as const
 

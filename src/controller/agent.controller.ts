@@ -121,8 +121,15 @@ export const createAgent = async (
   res: Response,
 ): Promise<void> => {
   try {
-    const { name, description, model, provider, systemPrompt, temperature } =
-      req.body;
+    const {
+      name,
+      description,
+      model,
+      provider,
+      systemPrompt,
+      temperature,
+      type,
+    } = req.body;
 
     const workspaceId = req.params.workspaceId;
 
@@ -209,6 +216,7 @@ export const createAgent = async (
         provider,
         systemPrompt,
         temperature,
+        type,
         workspaceId: workspaceId as string,
       },
     });
@@ -233,8 +241,15 @@ export const updateAgent = async (
   res: Response,
 ): Promise<void> => {
   try {
-    const { name, description, model, provider, systemPrompt, temperature } =
-      req.body;
+    const {
+      name,
+      description,
+      model,
+      provider,
+      systemPrompt,
+      temperature,
+      type,
+    } = req.body;
 
     const userId = req.user?.id;
     const agentId = req.params.agentId;
@@ -293,6 +308,7 @@ export const updateAgent = async (
         ...(name && { name: name?.trim() }),
         ...(description && { description: description?.trim() }),
         ...(model && { model }),
+        ...(type && { type }),
         ...(provider && { provider }),
         ...(systemPrompt && { systemPrompt: systemPrompt?.trim() }),
         ...(temperature !== undefined && { temperature }),

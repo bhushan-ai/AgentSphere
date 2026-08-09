@@ -106,6 +106,7 @@ const documentWorker = new Worker(
           ...doc.metadata,
           documentId: document.id,
           knowledgeBaseId: document.knowledgeBasedCollectionId,
+          fileName: document.fileName,
         },
       }));
 

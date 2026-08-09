@@ -45,3 +45,11 @@ export const DocumentStatus = {
 } as const
 
 export type DocumentStatus = (typeof DocumentStatus)[keyof typeof DocumentStatus]
+
+
+export const AgentType = {
+  CONVERSATIONAL: 'CONVERSATIONAL',
+  KNOWLEDGE_BASE: 'KNOWLEDGE_BASE'
+} as const
+
+export type AgentType = (typeof AgentType)[keyof typeof AgentType]

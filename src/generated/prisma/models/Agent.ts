@@ -43,6 +43,7 @@ export type AgentMinAggregateOutputType = {
   provider: string | null
   systemPrompt: string | null
   temperature: number | null
+  type: $Enums.AgentType | null
   createdAt: Date | null
 }
 
@@ -55,6 +56,7 @@ export type AgentMaxAggregateOutputType = {
   provider: string | null
   systemPrompt: string | null
   temperature: number | null
+  type: $Enums.AgentType | null
   createdAt: Date | null
 }
 
@@ -67,6 +69,7 @@ export type AgentCountAggregateOutputType = {
   provider: number
   systemPrompt: number
   temperature: number
+  type: number
   createdAt: number
   _all: number
 }
@@ -89,6 +92,7 @@ export type AgentMinAggregateInputType = {
   provider?: true
   systemPrompt?: true
   temperature?: true
+  type?: true
   createdAt?: true
 }
 
@@ -101,6 +105,7 @@ export type AgentMaxAggregateInputType = {
   provider?: true
   systemPrompt?: true
   temperature?: true
+  type?: true
   createdAt?: true
 }
 
@@ -113,6 +118,7 @@ export type AgentCountAggregateInputType = {
   provider?: true
   systemPrompt?: true
   temperature?: true
+  type?: true
   createdAt?: true
   _all?: true
 }
@@ -212,6 +218,7 @@ export type AgentGroupByOutputType = {
   provider: string
   systemPrompt: string
   temperature: number
+  type: $Enums.AgentType
   createdAt: Date
   _count: AgentCountAggregateOutputType | null
   _avg: AgentAvgAggregateOutputType | null
@@ -247,6 +254,7 @@ export type AgentWhereInput = {
   provider?: Prisma.StringFilter<"Agent"> | string
   systemPrompt?: Prisma.StringFilter<"Agent"> | string
   temperature?: Prisma.FloatFilter<"Agent"> | number
+  type?: Prisma.EnumAgentTypeFilter<"Agent"> | $Enums.AgentType
   createdAt?: Prisma.DateTimeFilter<"Agent"> | Date | string
   workspace?: Prisma.XOR<Prisma.WorkspaceScalarRelationFilter, Prisma.WorkspaceWhereInput>
   conversations?: Prisma.ConversationListRelationFilter
@@ -262,6 +270,7 @@ export type AgentOrderByWithRelationInput = {
   provider?: Prisma.SortOrder
   systemPrompt?: Prisma.SortOrder
   temperature?: Prisma.SortOrder
+  type?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   workspace?: Prisma.WorkspaceOrderByWithRelationInput
   conversations?: Prisma.ConversationOrderByRelationAggregateInput
@@ -280,6 +289,7 @@ export type AgentWhereUniqueInput = Prisma.AtLeast<{
   provider?: Prisma.StringFilter<"Agent"> | string
   systemPrompt?: Prisma.StringFilter<"Agent"> | string
   temperature?: Prisma.FloatFilter<"Agent"> | number
+  type?: Prisma.EnumAgentTypeFilter<"Agent"> | $Enums.AgentType
   createdAt?: Prisma.DateTimeFilter<"Agent"> | Date | string
   workspace?: Prisma.XOR<Prisma.WorkspaceScalarRelationFilter, Prisma.WorkspaceWhereInput>
   conversations?: Prisma.ConversationListRelationFilter
@@ -295,6 +305,7 @@ export type AgentOrderByWithAggregationInput = {
   provider?: Prisma.SortOrder
   systemPrompt?: Prisma.SortOrder
   temperature?: Prisma.SortOrder
+  type?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.AgentCountOrderByAggregateInput
   _avg?: Prisma.AgentAvgOrderByAggregateInput
@@ -315,6 +326,7 @@ export type AgentScalarWhereWithAggregatesInput = {
   provider?: Prisma.StringWithAggregatesFilter<"Agent"> | string
   systemPrompt?: Prisma.StringWithAggregatesFilter<"Agent"> | string
   temperature?: Prisma.FloatWithAggregatesFilter<"Agent"> | number
+  type?: Prisma.EnumAgentTypeWithAggregatesFilter<"Agent"> | $Enums.AgentType
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Agent"> | Date | string
 }
 
@@ -326,6 +338,7 @@ export type AgentCreateInput = {
   provider: string
   systemPrompt: string
   temperature: number
+  type: $Enums.AgentType
   createdAt?: Date | string
   workspace: Prisma.WorkspaceCreateNestedOneWithoutAgentsInput
   conversations?: Prisma.ConversationCreateNestedManyWithoutAgentInput
@@ -341,6 +354,7 @@ export type AgentUncheckedCreateInput = {
   provider: string
   systemPrompt: string
   temperature: number
+  type: $Enums.AgentType
   createdAt?: Date | string
   conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutAgentInput
   knowledgeBasedCollections?: Prisma.KnowledgeBasedCollectionUncheckedCreateNestedManyWithoutAgentInput
@@ -354,6 +368,7 @@ export type AgentUpdateInput = {
   provider?: Prisma.StringFieldUpdateOperationsInput | string
   systemPrompt?: Prisma.StringFieldUpdateOperationsInput | string
   temperature?: Prisma.FloatFieldUpdateOperationsInput | number
+  type?: Prisma.EnumAgentTypeFieldUpdateOperationsInput | $Enums.AgentType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   workspace?: Prisma.WorkspaceUpdateOneRequiredWithoutAgentsNestedInput
   conversations?: Prisma.ConversationUpdateManyWithoutAgentNestedInput
@@ -369,6 +384,7 @@ export type AgentUncheckedUpdateInput = {
   provider?: Prisma.StringFieldUpdateOperationsInput | string
   systemPrompt?: Prisma.StringFieldUpdateOperationsInput | string
   temperature?: Prisma.FloatFieldUpdateOperationsInput | number
+  type?: Prisma.EnumAgentTypeFieldUpdateOperationsInput | $Enums.AgentType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   conversations?: Prisma.ConversationUncheckedUpdateManyWithoutAgentNestedInput
   knowledgeBasedCollections?: Prisma.KnowledgeBasedCollectionUncheckedUpdateManyWithoutAgentNestedInput
@@ -383,6 +399,7 @@ export type AgentCreateManyInput = {
   provider: string
   systemPrompt: string
   temperature: number
+  type: $Enums.AgentType
   createdAt?: Date | string
 }
 
@@ -394,6 +411,7 @@ export type AgentUpdateManyMutationInput = {
   provider?: Prisma.StringFieldUpdateOperationsInput | string
   systemPrompt?: Prisma.StringFieldUpdateOperationsInput | string
   temperature?: Prisma.FloatFieldUpdateOperationsInput | number
+  type?: Prisma.EnumAgentTypeFieldUpdateOperationsInput | $Enums.AgentType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -406,6 +424,7 @@ export type AgentUncheckedUpdateManyInput = {
   provider?: Prisma.StringFieldUpdateOperationsInput | string
   systemPrompt?: Prisma.StringFieldUpdateOperationsInput | string
   temperature?: Prisma.FloatFieldUpdateOperationsInput | number
+  type?: Prisma.EnumAgentTypeFieldUpdateOperationsInput | $Enums.AgentType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -428,6 +447,7 @@ export type AgentCountOrderByAggregateInput = {
   provider?: Prisma.SortOrder
   systemPrompt?: Prisma.SortOrder
   temperature?: Prisma.SortOrder
+  type?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -444,6 +464,7 @@ export type AgentMaxOrderByAggregateInput = {
   provider?: Prisma.SortOrder
   systemPrompt?: Prisma.SortOrder
   temperature?: Prisma.SortOrder
+  type?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -456,6 +477,7 @@ export type AgentMinOrderByAggregateInput = {
   provider?: Prisma.SortOrder
   systemPrompt?: Prisma.SortOrder
   temperature?: Prisma.SortOrder
+  type?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -522,6 +544,10 @@ export type FloatFieldUpdateOperationsInput = {
   divide?: number
 }
 
+export type EnumAgentTypeFieldUpdateOperationsInput = {
+  set?: $Enums.AgentType
+}
+
 export type AgentCreateNestedOneWithoutConversationsInput = {
   create?: Prisma.XOR<Prisma.AgentCreateWithoutConversationsInput, Prisma.AgentUncheckedCreateWithoutConversationsInput>
   connectOrCreate?: Prisma.AgentCreateOrConnectWithoutConversationsInput
@@ -558,6 +584,7 @@ export type AgentCreateWithoutWorkspaceInput = {
   provider: string
   systemPrompt: string
   temperature: number
+  type: $Enums.AgentType
   createdAt?: Date | string
   conversations?: Prisma.ConversationCreateNestedManyWithoutAgentInput
   knowledgeBasedCollections?: Prisma.KnowledgeBasedCollectionCreateNestedManyWithoutAgentInput
@@ -571,6 +598,7 @@ export type AgentUncheckedCreateWithoutWorkspaceInput = {
   provider: string
   systemPrompt: string
   temperature: number
+  type: $Enums.AgentType
   createdAt?: Date | string
   conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutAgentInput
   knowledgeBasedCollections?: Prisma.KnowledgeBasedCollectionUncheckedCreateNestedManyWithoutAgentInput
@@ -614,6 +642,7 @@ export type AgentScalarWhereInput = {
   provider?: Prisma.StringFilter<"Agent"> | string
   systemPrompt?: Prisma.StringFilter<"Agent"> | string
   temperature?: Prisma.FloatFilter<"Agent"> | number
+  type?: Prisma.EnumAgentTypeFilter<"Agent"> | $Enums.AgentType
   createdAt?: Prisma.DateTimeFilter<"Agent"> | Date | string
 }
 
@@ -625,6 +654,7 @@ export type AgentCreateWithoutConversationsInput = {
   provider: string
   systemPrompt: string
   temperature: number
+  type: $Enums.AgentType
   createdAt?: Date | string
   workspace: Prisma.WorkspaceCreateNestedOneWithoutAgentsInput
   knowledgeBasedCollections?: Prisma.KnowledgeBasedCollectionCreateNestedManyWithoutAgentInput
@@ -639,6 +669,7 @@ export type AgentUncheckedCreateWithoutConversationsInput = {
   provider: string
   systemPrompt: string
   temperature: number
+  type: $Enums.AgentType
   createdAt?: Date | string
   knowledgeBasedCollections?: Prisma.KnowledgeBasedCollectionUncheckedCreateNestedManyWithoutAgentInput
 }
@@ -667,6 +698,7 @@ export type AgentUpdateWithoutConversationsInput = {
   provider?: Prisma.StringFieldUpdateOperationsInput | string
   systemPrompt?: Prisma.StringFieldUpdateOperationsInput | string
   temperature?: Prisma.FloatFieldUpdateOperationsInput | number
+  type?: Prisma.EnumAgentTypeFieldUpdateOperationsInput | $Enums.AgentType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   workspace?: Prisma.WorkspaceUpdateOneRequiredWithoutAgentsNestedInput
   knowledgeBasedCollections?: Prisma.KnowledgeBasedCollectionUpdateManyWithoutAgentNestedInput
@@ -681,6 +713,7 @@ export type AgentUncheckedUpdateWithoutConversationsInput = {
   provider?: Prisma.StringFieldUpdateOperationsInput | string
   systemPrompt?: Prisma.StringFieldUpdateOperationsInput | string
   temperature?: Prisma.FloatFieldUpdateOperationsInput | number
+  type?: Prisma.EnumAgentTypeFieldUpdateOperationsInput | $Enums.AgentType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   knowledgeBasedCollections?: Prisma.KnowledgeBasedCollectionUncheckedUpdateManyWithoutAgentNestedInput
 }
@@ -693,6 +726,7 @@ export type AgentCreateWithoutKnowledgeBasedCollectionsInput = {
   provider: string
   systemPrompt: string
   temperature: number
+  type: $Enums.AgentType
   createdAt?: Date | string
   workspace: Prisma.WorkspaceCreateNestedOneWithoutAgentsInput
   conversations?: Prisma.ConversationCreateNestedManyWithoutAgentInput
@@ -707,6 +741,7 @@ export type AgentUncheckedCreateWithoutKnowledgeBasedCollectionsInput = {
   provider: string
   systemPrompt: string
   temperature: number
+  type: $Enums.AgentType
   createdAt?: Date | string
   conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutAgentInput
 }
@@ -735,6 +770,7 @@ export type AgentUpdateWithoutKnowledgeBasedCollectionsInput = {
   provider?: Prisma.StringFieldUpdateOperationsInput | string
   systemPrompt?: Prisma.StringFieldUpdateOperationsInput | string
   temperature?: Prisma.FloatFieldUpdateOperationsInput | number
+  type?: Prisma.EnumAgentTypeFieldUpdateOperationsInput | $Enums.AgentType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   workspace?: Prisma.WorkspaceUpdateOneRequiredWithoutAgentsNestedInput
   conversations?: Prisma.ConversationUpdateManyWithoutAgentNestedInput
@@ -749,6 +785,7 @@ export type AgentUncheckedUpdateWithoutKnowledgeBasedCollectionsInput = {
   provider?: Prisma.StringFieldUpdateOperationsInput | string
   systemPrompt?: Prisma.StringFieldUpdateOperationsInput | string
   temperature?: Prisma.FloatFieldUpdateOperationsInput | number
+  type?: Prisma.EnumAgentTypeFieldUpdateOperationsInput | $Enums.AgentType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   conversations?: Prisma.ConversationUncheckedUpdateManyWithoutAgentNestedInput
 }
@@ -761,6 +798,7 @@ export type AgentCreateManyWorkspaceInput = {
   provider: string
   systemPrompt: string
   temperature: number
+  type: $Enums.AgentType
   createdAt?: Date | string
 }
 
@@ -772,6 +810,7 @@ export type AgentUpdateWithoutWorkspaceInput = {
   provider?: Prisma.StringFieldUpdateOperationsInput | string
   systemPrompt?: Prisma.StringFieldUpdateOperationsInput | string
   temperature?: Prisma.FloatFieldUpdateOperationsInput | number
+  type?: Prisma.EnumAgentTypeFieldUpdateOperationsInput | $Enums.AgentType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   conversations?: Prisma.ConversationUpdateManyWithoutAgentNestedInput
   knowledgeBasedCollections?: Prisma.KnowledgeBasedCollectionUpdateManyWithoutAgentNestedInput
@@ -785,6 +824,7 @@ export type AgentUncheckedUpdateWithoutWorkspaceInput = {
   provider?: Prisma.StringFieldUpdateOperationsInput | string
   systemPrompt?: Prisma.StringFieldUpdateOperationsInput | string
   temperature?: Prisma.FloatFieldUpdateOperationsInput | number
+  type?: Prisma.EnumAgentTypeFieldUpdateOperationsInput | $Enums.AgentType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   conversations?: Prisma.ConversationUncheckedUpdateManyWithoutAgentNestedInput
   knowledgeBasedCollections?: Prisma.KnowledgeBasedCollectionUncheckedUpdateManyWithoutAgentNestedInput
@@ -798,6 +838,7 @@ export type AgentUncheckedUpdateManyWithoutWorkspaceInput = {
   provider?: Prisma.StringFieldUpdateOperationsInput | string
   systemPrompt?: Prisma.StringFieldUpdateOperationsInput | string
   temperature?: Prisma.FloatFieldUpdateOperationsInput | number
+  type?: Prisma.EnumAgentTypeFieldUpdateOperationsInput | $Enums.AgentType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -850,6 +891,7 @@ export type AgentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   provider?: boolean
   systemPrompt?: boolean
   temperature?: boolean
+  type?: boolean
   createdAt?: boolean
   workspace?: boolean | Prisma.WorkspaceDefaultArgs<ExtArgs>
   conversations?: boolean | Prisma.Agent$conversationsArgs<ExtArgs>
@@ -866,6 +908,7 @@ export type AgentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   provider?: boolean
   systemPrompt?: boolean
   temperature?: boolean
+  type?: boolean
   createdAt?: boolean
   workspace?: boolean | Prisma.WorkspaceDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["agent"]>
@@ -879,6 +922,7 @@ export type AgentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   provider?: boolean
   systemPrompt?: boolean
   temperature?: boolean
+  type?: boolean
   createdAt?: boolean
   workspace?: boolean | Prisma.WorkspaceDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["agent"]>
@@ -892,10 +936,11 @@ export type AgentSelectScalar = {
   provider?: boolean
   systemPrompt?: boolean
   temperature?: boolean
+  type?: boolean
   createdAt?: boolean
 }
 
-export type AgentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "workspaceId" | "description" | "model" | "provider" | "systemPrompt" | "temperature" | "createdAt", ExtArgs["result"]["agent"]>
+export type AgentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "workspaceId" | "description" | "model" | "provider" | "systemPrompt" | "temperature" | "type" | "createdAt", ExtArgs["result"]["agent"]>
 export type AgentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   workspace?: boolean | Prisma.WorkspaceDefaultArgs<ExtArgs>
   conversations?: boolean | Prisma.Agent$conversationsArgs<ExtArgs>
@@ -925,6 +970,7 @@ export type $AgentPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     provider: string
     systemPrompt: string
     temperature: number
+    type: $Enums.AgentType
     createdAt: Date
   }, ExtArgs["result"]["agent"]>
   composites: {}
@@ -1360,6 +1406,7 @@ export interface AgentFieldRefs {
   readonly provider: Prisma.FieldRef<"Agent", 'String'>
   readonly systemPrompt: Prisma.FieldRef<"Agent", 'String'>
   readonly temperature: Prisma.FieldRef<"Agent", 'Float'>
+  readonly type: Prisma.FieldRef<"Agent", 'AgentType'>
   readonly createdAt: Prisma.FieldRef<"Agent", 'DateTime'>
 }
     
