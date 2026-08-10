@@ -51,8 +51,8 @@ model Agent {
   name         String
   workspaceId  String
   description  String
-  model        AIProvider
-  provider     String
+  model        String
+  provider     AIProvider
   systemPrompt String
   temperature  Float
   type         AgentType

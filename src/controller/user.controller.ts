@@ -127,16 +127,20 @@ export const updateUser = async (
       return;
     }
 
-    const hashPass = await bcrypt.hash(password, 10);
+    let hashedPassword;
+
+    if (password) {
+      hashedPassword = await bcrypt.hash(password, 10);
+    }
 
     const user = await prisma.user.update({
       where: {
-        id: userId.id,
+        id: userId,
       },
       data: {
         ...(name && { name }),
         ...(email && { email }),
-        ...(password && { password: hashPass }),
+        ...(password && { password: hashedPassword }),
       },
     });
 

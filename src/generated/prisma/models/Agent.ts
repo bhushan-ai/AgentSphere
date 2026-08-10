@@ -39,8 +39,8 @@ export type AgentMinAggregateOutputType = {
   name: string | null
   workspaceId: string | null
   description: string | null
-  model: $Enums.AIProvider | null
-  provider: string | null
+  model: string | null
+  provider: $Enums.AIProvider | null
   systemPrompt: string | null
   temperature: number | null
   type: $Enums.AgentType | null
@@ -52,8 +52,8 @@ export type AgentMaxAggregateOutputType = {
   name: string | null
   workspaceId: string | null
   description: string | null
-  model: $Enums.AIProvider | null
-  provider: string | null
+  model: string | null
+  provider: $Enums.AIProvider | null
   systemPrompt: string | null
   temperature: number | null
   type: $Enums.AgentType | null
@@ -214,8 +214,8 @@ export type AgentGroupByOutputType = {
   name: string
   workspaceId: string
   description: string
-  model: $Enums.AIProvider
-  provider: string
+  model: string
+  provider: $Enums.AIProvider
   systemPrompt: string
   temperature: number
   type: $Enums.AgentType
@@ -250,8 +250,8 @@ export type AgentWhereInput = {
   name?: Prisma.StringFilter<"Agent"> | string
   workspaceId?: Prisma.StringFilter<"Agent"> | string
   description?: Prisma.StringFilter<"Agent"> | string
-  model?: Prisma.EnumAIProviderFilter<"Agent"> | $Enums.AIProvider
-  provider?: Prisma.StringFilter<"Agent"> | string
+  model?: Prisma.StringFilter<"Agent"> | string
+  provider?: Prisma.EnumAIProviderFilter<"Agent"> | $Enums.AIProvider
   systemPrompt?: Prisma.StringFilter<"Agent"> | string
   temperature?: Prisma.FloatFilter<"Agent"> | number
   type?: Prisma.EnumAgentTypeFilter<"Agent"> | $Enums.AgentType
@@ -285,8 +285,8 @@ export type AgentWhereUniqueInput = Prisma.AtLeast<{
   name?: Prisma.StringFilter<"Agent"> | string
   workspaceId?: Prisma.StringFilter<"Agent"> | string
   description?: Prisma.StringFilter<"Agent"> | string
-  model?: Prisma.EnumAIProviderFilter<"Agent"> | $Enums.AIProvider
-  provider?: Prisma.StringFilter<"Agent"> | string
+  model?: Prisma.StringFilter<"Agent"> | string
+  provider?: Prisma.EnumAIProviderFilter<"Agent"> | $Enums.AIProvider
   systemPrompt?: Prisma.StringFilter<"Agent"> | string
   temperature?: Prisma.FloatFilter<"Agent"> | number
   type?: Prisma.EnumAgentTypeFilter<"Agent"> | $Enums.AgentType
@@ -322,8 +322,8 @@ export type AgentScalarWhereWithAggregatesInput = {
   name?: Prisma.StringWithAggregatesFilter<"Agent"> | string
   workspaceId?: Prisma.StringWithAggregatesFilter<"Agent"> | string
   description?: Prisma.StringWithAggregatesFilter<"Agent"> | string
-  model?: Prisma.EnumAIProviderWithAggregatesFilter<"Agent"> | $Enums.AIProvider
-  provider?: Prisma.StringWithAggregatesFilter<"Agent"> | string
+  model?: Prisma.StringWithAggregatesFilter<"Agent"> | string
+  provider?: Prisma.EnumAIProviderWithAggregatesFilter<"Agent"> | $Enums.AIProvider
   systemPrompt?: Prisma.StringWithAggregatesFilter<"Agent"> | string
   temperature?: Prisma.FloatWithAggregatesFilter<"Agent"> | number
   type?: Prisma.EnumAgentTypeWithAggregatesFilter<"Agent"> | $Enums.AgentType
@@ -334,8 +334,8 @@ export type AgentCreateInput = {
   id?: string
   name: string
   description: string
-  model: $Enums.AIProvider
-  provider: string
+  model: string
+  provider: $Enums.AIProvider
   systemPrompt: string
   temperature: number
   type: $Enums.AgentType
@@ -350,8 +350,8 @@ export type AgentUncheckedCreateInput = {
   name: string
   workspaceId: string
   description: string
-  model: $Enums.AIProvider
-  provider: string
+  model: string
+  provider: $Enums.AIProvider
   systemPrompt: string
   temperature: number
   type: $Enums.AgentType
@@ -364,8 +364,8 @@ export type AgentUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  model?: Prisma.EnumAIProviderFieldUpdateOperationsInput | $Enums.AIProvider
-  provider?: Prisma.StringFieldUpdateOperationsInput | string
+  model?: Prisma.StringFieldUpdateOperationsInput | string
+  provider?: Prisma.EnumAIProviderFieldUpdateOperationsInput | $Enums.AIProvider
   systemPrompt?: Prisma.StringFieldUpdateOperationsInput | string
   temperature?: Prisma.FloatFieldUpdateOperationsInput | number
   type?: Prisma.EnumAgentTypeFieldUpdateOperationsInput | $Enums.AgentType
@@ -380,8 +380,8 @@ export type AgentUncheckedUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   workspaceId?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  model?: Prisma.EnumAIProviderFieldUpdateOperationsInput | $Enums.AIProvider
-  provider?: Prisma.StringFieldUpdateOperationsInput | string
+  model?: Prisma.StringFieldUpdateOperationsInput | string
+  provider?: Prisma.EnumAIProviderFieldUpdateOperationsInput | $Enums.AIProvider
   systemPrompt?: Prisma.StringFieldUpdateOperationsInput | string
   temperature?: Prisma.FloatFieldUpdateOperationsInput | number
   type?: Prisma.EnumAgentTypeFieldUpdateOperationsInput | $Enums.AgentType
@@ -395,8 +395,8 @@ export type AgentCreateManyInput = {
   name: string
   workspaceId: string
   description: string
-  model: $Enums.AIProvider
-  provider: string
+  model: string
+  provider: $Enums.AIProvider
   systemPrompt: string
   temperature: number
   type: $Enums.AgentType
@@ -407,8 +407,8 @@ export type AgentUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  model?: Prisma.EnumAIProviderFieldUpdateOperationsInput | $Enums.AIProvider
-  provider?: Prisma.StringFieldUpdateOperationsInput | string
+  model?: Prisma.StringFieldUpdateOperationsInput | string
+  provider?: Prisma.EnumAIProviderFieldUpdateOperationsInput | $Enums.AIProvider
   systemPrompt?: Prisma.StringFieldUpdateOperationsInput | string
   temperature?: Prisma.FloatFieldUpdateOperationsInput | number
   type?: Prisma.EnumAgentTypeFieldUpdateOperationsInput | $Enums.AgentType
@@ -420,8 +420,8 @@ export type AgentUncheckedUpdateManyInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   workspaceId?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  model?: Prisma.EnumAIProviderFieldUpdateOperationsInput | $Enums.AIProvider
-  provider?: Prisma.StringFieldUpdateOperationsInput | string
+  model?: Prisma.StringFieldUpdateOperationsInput | string
+  provider?: Prisma.EnumAIProviderFieldUpdateOperationsInput | $Enums.AIProvider
   systemPrompt?: Prisma.StringFieldUpdateOperationsInput | string
   temperature?: Prisma.FloatFieldUpdateOperationsInput | number
   type?: Prisma.EnumAgentTypeFieldUpdateOperationsInput | $Enums.AgentType
@@ -580,8 +580,8 @@ export type AgentCreateWithoutWorkspaceInput = {
   id?: string
   name: string
   description: string
-  model: $Enums.AIProvider
-  provider: string
+  model: string
+  provider: $Enums.AIProvider
   systemPrompt: string
   temperature: number
   type: $Enums.AgentType
@@ -594,8 +594,8 @@ export type AgentUncheckedCreateWithoutWorkspaceInput = {
   id?: string
   name: string
   description: string
-  model: $Enums.AIProvider
-  provider: string
+  model: string
+  provider: $Enums.AIProvider
   systemPrompt: string
   temperature: number
   type: $Enums.AgentType
@@ -638,8 +638,8 @@ export type AgentScalarWhereInput = {
   name?: Prisma.StringFilter<"Agent"> | string
   workspaceId?: Prisma.StringFilter<"Agent"> | string
   description?: Prisma.StringFilter<"Agent"> | string
-  model?: Prisma.EnumAIProviderFilter<"Agent"> | $Enums.AIProvider
-  provider?: Prisma.StringFilter<"Agent"> | string
+  model?: Prisma.StringFilter<"Agent"> | string
+  provider?: Prisma.EnumAIProviderFilter<"Agent"> | $Enums.AIProvider
   systemPrompt?: Prisma.StringFilter<"Agent"> | string
   temperature?: Prisma.FloatFilter<"Agent"> | number
   type?: Prisma.EnumAgentTypeFilter<"Agent"> | $Enums.AgentType
@@ -650,8 +650,8 @@ export type AgentCreateWithoutConversationsInput = {
   id?: string
   name: string
   description: string
-  model: $Enums.AIProvider
-  provider: string
+  model: string
+  provider: $Enums.AIProvider
   systemPrompt: string
   temperature: number
   type: $Enums.AgentType
@@ -665,8 +665,8 @@ export type AgentUncheckedCreateWithoutConversationsInput = {
   name: string
   workspaceId: string
   description: string
-  model: $Enums.AIProvider
-  provider: string
+  model: string
+  provider: $Enums.AIProvider
   systemPrompt: string
   temperature: number
   type: $Enums.AgentType
@@ -694,8 +694,8 @@ export type AgentUpdateWithoutConversationsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  model?: Prisma.EnumAIProviderFieldUpdateOperationsInput | $Enums.AIProvider
-  provider?: Prisma.StringFieldUpdateOperationsInput | string
+  model?: Prisma.StringFieldUpdateOperationsInput | string
+  provider?: Prisma.EnumAIProviderFieldUpdateOperationsInput | $Enums.AIProvider
   systemPrompt?: Prisma.StringFieldUpdateOperationsInput | string
   temperature?: Prisma.FloatFieldUpdateOperationsInput | number
   type?: Prisma.EnumAgentTypeFieldUpdateOperationsInput | $Enums.AgentType
@@ -709,8 +709,8 @@ export type AgentUncheckedUpdateWithoutConversationsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   workspaceId?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  model?: Prisma.EnumAIProviderFieldUpdateOperationsInput | $Enums.AIProvider
-  provider?: Prisma.StringFieldUpdateOperationsInput | string
+  model?: Prisma.StringFieldUpdateOperationsInput | string
+  provider?: Prisma.EnumAIProviderFieldUpdateOperationsInput | $Enums.AIProvider
   systemPrompt?: Prisma.StringFieldUpdateOperationsInput | string
   temperature?: Prisma.FloatFieldUpdateOperationsInput | number
   type?: Prisma.EnumAgentTypeFieldUpdateOperationsInput | $Enums.AgentType
@@ -722,8 +722,8 @@ export type AgentCreateWithoutKnowledgeBasedCollectionsInput = {
   id?: string
   name: string
   description: string
-  model: $Enums.AIProvider
-  provider: string
+  model: string
+  provider: $Enums.AIProvider
   systemPrompt: string
   temperature: number
   type: $Enums.AgentType
@@ -737,8 +737,8 @@ export type AgentUncheckedCreateWithoutKnowledgeBasedCollectionsInput = {
   name: string
   workspaceId: string
   description: string
-  model: $Enums.AIProvider
-  provider: string
+  model: string
+  provider: $Enums.AIProvider
   systemPrompt: string
   temperature: number
   type: $Enums.AgentType
@@ -766,8 +766,8 @@ export type AgentUpdateWithoutKnowledgeBasedCollectionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  model?: Prisma.EnumAIProviderFieldUpdateOperationsInput | $Enums.AIProvider
-  provider?: Prisma.StringFieldUpdateOperationsInput | string
+  model?: Prisma.StringFieldUpdateOperationsInput | string
+  provider?: Prisma.EnumAIProviderFieldUpdateOperationsInput | $Enums.AIProvider
   systemPrompt?: Prisma.StringFieldUpdateOperationsInput | string
   temperature?: Prisma.FloatFieldUpdateOperationsInput | number
   type?: Prisma.EnumAgentTypeFieldUpdateOperationsInput | $Enums.AgentType
@@ -781,8 +781,8 @@ export type AgentUncheckedUpdateWithoutKnowledgeBasedCollectionsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   workspaceId?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  model?: Prisma.EnumAIProviderFieldUpdateOperationsInput | $Enums.AIProvider
-  provider?: Prisma.StringFieldUpdateOperationsInput | string
+  model?: Prisma.StringFieldUpdateOperationsInput | string
+  provider?: Prisma.EnumAIProviderFieldUpdateOperationsInput | $Enums.AIProvider
   systemPrompt?: Prisma.StringFieldUpdateOperationsInput | string
   temperature?: Prisma.FloatFieldUpdateOperationsInput | number
   type?: Prisma.EnumAgentTypeFieldUpdateOperationsInput | $Enums.AgentType
@@ -794,8 +794,8 @@ export type AgentCreateManyWorkspaceInput = {
   id?: string
   name: string
   description: string
-  model: $Enums.AIProvider
-  provider: string
+  model: string
+  provider: $Enums.AIProvider
   systemPrompt: string
   temperature: number
   type: $Enums.AgentType
@@ -806,8 +806,8 @@ export type AgentUpdateWithoutWorkspaceInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  model?: Prisma.EnumAIProviderFieldUpdateOperationsInput | $Enums.AIProvider
-  provider?: Prisma.StringFieldUpdateOperationsInput | string
+  model?: Prisma.StringFieldUpdateOperationsInput | string
+  provider?: Prisma.EnumAIProviderFieldUpdateOperationsInput | $Enums.AIProvider
   systemPrompt?: Prisma.StringFieldUpdateOperationsInput | string
   temperature?: Prisma.FloatFieldUpdateOperationsInput | number
   type?: Prisma.EnumAgentTypeFieldUpdateOperationsInput | $Enums.AgentType
@@ -820,8 +820,8 @@ export type AgentUncheckedUpdateWithoutWorkspaceInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  model?: Prisma.EnumAIProviderFieldUpdateOperationsInput | $Enums.AIProvider
-  provider?: Prisma.StringFieldUpdateOperationsInput | string
+  model?: Prisma.StringFieldUpdateOperationsInput | string
+  provider?: Prisma.EnumAIProviderFieldUpdateOperationsInput | $Enums.AIProvider
   systemPrompt?: Prisma.StringFieldUpdateOperationsInput | string
   temperature?: Prisma.FloatFieldUpdateOperationsInput | number
   type?: Prisma.EnumAgentTypeFieldUpdateOperationsInput | $Enums.AgentType
@@ -834,8 +834,8 @@ export type AgentUncheckedUpdateManyWithoutWorkspaceInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  model?: Prisma.EnumAIProviderFieldUpdateOperationsInput | $Enums.AIProvider
-  provider?: Prisma.StringFieldUpdateOperationsInput | string
+  model?: Prisma.StringFieldUpdateOperationsInput | string
+  provider?: Prisma.EnumAIProviderFieldUpdateOperationsInput | $Enums.AIProvider
   systemPrompt?: Prisma.StringFieldUpdateOperationsInput | string
   temperature?: Prisma.FloatFieldUpdateOperationsInput | number
   type?: Prisma.EnumAgentTypeFieldUpdateOperationsInput | $Enums.AgentType
@@ -966,8 +966,8 @@ export type $AgentPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     name: string
     workspaceId: string
     description: string
-    model: $Enums.AIProvider
-    provider: string
+    model: string
+    provider: $Enums.AIProvider
     systemPrompt: string
     temperature: number
     type: $Enums.AgentType
@@ -1402,8 +1402,8 @@ export interface AgentFieldRefs {
   readonly name: Prisma.FieldRef<"Agent", 'String'>
   readonly workspaceId: Prisma.FieldRef<"Agent", 'String'>
   readonly description: Prisma.FieldRef<"Agent", 'String'>
-  readonly model: Prisma.FieldRef<"Agent", 'AIProvider'>
-  readonly provider: Prisma.FieldRef<"Agent", 'String'>
+  readonly model: Prisma.FieldRef<"Agent", 'String'>
+  readonly provider: Prisma.FieldRef<"Agent", 'AIProvider'>
   readonly systemPrompt: Prisma.FieldRef<"Agent", 'String'>
   readonly temperature: Prisma.FieldRef<"Agent", 'Float'>
   readonly type: Prisma.FieldRef<"Agent", 'AgentType'>

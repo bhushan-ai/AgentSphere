@@ -46,7 +46,7 @@ export const createPreSignedUrl = async (req: Request, res: Response) => {
       });
     }
 
-    const key = `uploads/${randomUUID}-${filename}`;
+    const key = `uploads/${randomUUID()}-${filename}`;
 
     const command = new PutObjectCommand({
       Bucket: process.env.AWS_BUCKET_NAME!,

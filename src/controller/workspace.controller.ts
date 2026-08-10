@@ -77,7 +77,7 @@ export const createWorkspace = async (
   }
 };
 
-//get a workspace
+//get the workspaces
 export const getWorkspace = async (
   req: Request,
   res: Response,
@@ -139,6 +139,7 @@ export const inviteUserToWorkspace = async (
       return;
     }
 
+    //check invited user is exist or not
     const user = await prisma.user.findUnique({
       where: {
         email: email,

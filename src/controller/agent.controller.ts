@@ -375,7 +375,7 @@ export const deleteAgent = async (
       },
     });
 
-    res.status(204).json({
+    res.status(200).json({
       success: true,
       message: "Agent deleted successfully",
     });

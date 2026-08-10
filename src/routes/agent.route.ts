@@ -13,7 +13,7 @@ const agentRouter = Router();
 agentRouter.post("/create/:workspaceId", jwtMiddleware, createAgent);
 agentRouter.patch("/update/:agentId", jwtMiddleware, updateAgent);
 agentRouter.get("/get/:agentId", jwtMiddleware, getAgentsById);
-agentRouter.get("/get/:workspaceId", jwtMiddleware, getAgents);
+agentRouter.get("/get-all/:workspaceId", jwtMiddleware, getAgents);
 agentRouter.delete("/delete/:agentId", jwtMiddleware, deleteAgent);
 
 export default agentRouter;

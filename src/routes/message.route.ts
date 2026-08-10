@@ -14,7 +14,7 @@ messageRouter.get(
   jwtMiddleware,
   getMessages,
 );
-messageRouter.get(
+messageRouter.delete(
   "/conversation/delete/:messageId",
   jwtMiddleware,
   deleteMessage,

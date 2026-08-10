@@ -12,9 +12,9 @@ const userRouter = Router();
 //public Routes
 userRouter.post("/register", createUser);
 userRouter.post("/login", login);
-userRouter.get("/logout", logout);
+userRouter.delete("/logout", logout);
 
 //protected Routes
-userRouter.put("/update", jwtMiddleware, updateUser);
+userRouter.patch("/update", jwtMiddleware, updateUser);
 
 export default userRouter;
