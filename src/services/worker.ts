@@ -11,8 +11,9 @@ import { createWriteStream } from "fs";
 import { mkdir } from "fs/promises";
 import { pipeline } from "stream/promises";
 import path from "path";
-import { vectorStore } from "./qdrant/connection";
+import { embeddings, qdrantClient, vectorStore } from "./qdrant/connection";
 import { unlink } from "fs/promises";
+import crypto, { randomUUID } from "crypto";
 
 // Create a worker for the document queue
 const documentWorker = new Worker(
@@ -20,6 +21,8 @@ const documentWorker = new Worker(
   async (job) => {
     console.log("Processing job data");
     const { documentId } = job.data;
+    console.log("📄 Processing job:", job.id);
+    console.log("📦 Data:", job.data);
     let tempPath;
     try {
       const document = await prisma.document.findUnique({
@@ -111,17 +114,49 @@ const documentWorker = new Worker(
       }));
 
       //storing to db
-      await vectorStore.addDocuments(chunksWithMetadata);
+      const BATCH_SIZE = 20;
 
-      //update the status to READY
-      await prisma.document.update({
-        where: {
-          id: documentId,
-        },
-        data: {
-          status: "READY",
-        },
-      });
+      for (let i = 0; i < chunksWithMetadata.length; i += BATCH_SIZE) {
+        const batch = chunksWithMetadata.slice(i, i + BATCH_SIZE);
+
+        const vectors = await embeddings.embedDocuments(
+          batch.map((doc) => doc.pageContent),
+        );
+
+        const points = batch.map((doc, index) => {
+          const vector = vectors[index];
+
+          if (!vector || vector.length !== 3072) {
+            throw new Error(
+              `Invalid embedding at index ${index}: ${vector?.length ?? 0}`,
+            );
+          }
+
+          return {
+            id: randomUUID(),
+            vector,
+            payload: {
+              pageContent: doc.pageContent,
+              metadata: doc.metadata,
+            },
+          };
+        });
+
+        await qdrantClient.upsert("agent-sphere", {
+          wait: true,
+          points,
+        });
+
+        //update the status to READY
+        await prisma.document.update({
+          where: {
+            id: documentId,
+          },
+          data: {
+            status: "READY",
+          },
+        });
+      }
     } catch (error) {
       await prisma.document.update({
         where: {

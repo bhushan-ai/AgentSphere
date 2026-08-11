@@ -151,7 +151,8 @@ export const KnowledgeBasedCollectionScalarFieldEnum = {
   id: 'id',
   agentId: 'agentId',
   title: 'title',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  createdBy: 'createdBy'
 } as const
 
 export type KnowledgeBasedCollectionScalarFieldEnum = (typeof KnowledgeBasedCollectionScalarFieldEnum)[keyof typeof KnowledgeBasedCollectionScalarFieldEnum]

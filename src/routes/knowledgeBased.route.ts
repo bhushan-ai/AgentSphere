@@ -4,10 +4,17 @@ import {
   createPreSignedUrl,
   deleteDocument,
   getDocuments,
+  knowledgeBaseCollection,
 } from "../controller/knowledgeBase.controller";
 import { jwtMiddleware } from "../middleware/jwt";
 
 const knowledgeRouter = Router();
+
+knowledgeRouter.post(
+  "/create/knowledgeBased/:agentId",
+  jwtMiddleware,
+  knowledgeBaseCollection,
+);
 
 knowledgeRouter.post(
   "/create/documents/presigned-url",

@@ -92,7 +92,8 @@ export const sendMessage = async (
       take: 20,
     });
 
-    const formattedHistory = history.reverse()
+    const formattedHistory = history
+      .reverse()
       .map((msg) => `${msg.role}: ${msg.content}`)
       .join("\n");
 
@@ -108,7 +109,7 @@ export const sendMessage = async (
           agentId: conversation.agentId,
         },
       });
-
+      console.log("KNOWLEDGE BASE:", knowledgeBase);
       if (!knowledgeBase) {
         throw new Error("Knowledge base not found");
       }
@@ -135,8 +136,9 @@ export const sendMessage = async (
           ],
         },
       });
-
       const relevantChunks = await vectorSearcher.invoke(message.content);
+
+      console.log("RELEVANT CHUNKS:", relevantChunks);
 
       const contextFromChunks = relevantChunks
         .map((doc) => {
@@ -148,6 +150,13 @@ export const sendMessage = async (
         })
         .join("\n\n");
 
+      console.log(
+        relevantChunks.map((doc) => ({
+          content: doc.pageContent,
+          metadata: doc.metadata,
+        })),
+      );
+
       context = `
         Use the following retrieved context to answer the user's question.
          Context: ${contextFromChunks}
@@ -155,6 +164,7 @@ export const sendMessage = async (
         `;
     }
 
+    console.log("RAG CONTEXT:", context);
     const prompt = `${context}
 
   Current Question:

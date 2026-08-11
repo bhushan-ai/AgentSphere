@@ -29,6 +29,7 @@ export type KnowledgeBasedCollectionMinAggregateOutputType = {
   agentId: string | null
   title: string | null
   createdAt: Date | null
+  createdBy: string | null
 }
 
 export type KnowledgeBasedCollectionMaxAggregateOutputType = {
@@ -36,6 +37,7 @@ export type KnowledgeBasedCollectionMaxAggregateOutputType = {
   agentId: string | null
   title: string | null
   createdAt: Date | null
+  createdBy: string | null
 }
 
 export type KnowledgeBasedCollectionCountAggregateOutputType = {
@@ -43,6 +45,7 @@ export type KnowledgeBasedCollectionCountAggregateOutputType = {
   agentId: number
   title: number
   createdAt: number
+  createdBy: number
   _all: number
 }
 
@@ -52,6 +55,7 @@ export type KnowledgeBasedCollectionMinAggregateInputType = {
   agentId?: true
   title?: true
   createdAt?: true
+  createdBy?: true
 }
 
 export type KnowledgeBasedCollectionMaxAggregateInputType = {
@@ -59,6 +63,7 @@ export type KnowledgeBasedCollectionMaxAggregateInputType = {
   agentId?: true
   title?: true
   createdAt?: true
+  createdBy?: true
 }
 
 export type KnowledgeBasedCollectionCountAggregateInputType = {
@@ -66,6 +71,7 @@ export type KnowledgeBasedCollectionCountAggregateInputType = {
   agentId?: true
   title?: true
   createdAt?: true
+  createdBy?: true
   _all?: true
 }
 
@@ -146,6 +152,7 @@ export type KnowledgeBasedCollectionGroupByOutputType = {
   agentId: string
   title: string
   createdAt: Date
+  createdBy: string
   _count: KnowledgeBasedCollectionCountAggregateOutputType | null
   _min: KnowledgeBasedCollectionMinAggregateOutputType | null
   _max: KnowledgeBasedCollectionMaxAggregateOutputType | null
@@ -174,6 +181,8 @@ export type KnowledgeBasedCollectionWhereInput = {
   agentId?: Prisma.StringFilter<"KnowledgeBasedCollection"> | string
   title?: Prisma.StringFilter<"KnowledgeBasedCollection"> | string
   createdAt?: Prisma.DateTimeFilter<"KnowledgeBasedCollection"> | Date | string
+  createdBy?: Prisma.StringFilter<"KnowledgeBasedCollection"> | string
+  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   agent?: Prisma.XOR<Prisma.AgentScalarRelationFilter, Prisma.AgentWhereInput>
   documents?: Prisma.DocumentListRelationFilter
 }
@@ -183,6 +192,8 @@ export type KnowledgeBasedCollectionOrderByWithRelationInput = {
   agentId?: Prisma.SortOrder
   title?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
+  user?: Prisma.UserOrderByWithRelationInput
   agent?: Prisma.AgentOrderByWithRelationInput
   documents?: Prisma.DocumentOrderByRelationAggregateInput
 }
@@ -195,6 +206,8 @@ export type KnowledgeBasedCollectionWhereUniqueInput = Prisma.AtLeast<{
   agentId?: Prisma.StringFilter<"KnowledgeBasedCollection"> | string
   title?: Prisma.StringFilter<"KnowledgeBasedCollection"> | string
   createdAt?: Prisma.DateTimeFilter<"KnowledgeBasedCollection"> | Date | string
+  createdBy?: Prisma.StringFilter<"KnowledgeBasedCollection"> | string
+  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   agent?: Prisma.XOR<Prisma.AgentScalarRelationFilter, Prisma.AgentWhereInput>
   documents?: Prisma.DocumentListRelationFilter
 }, "id">
@@ -204,6 +217,7 @@ export type KnowledgeBasedCollectionOrderByWithAggregationInput = {
   agentId?: Prisma.SortOrder
   title?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
   _count?: Prisma.KnowledgeBasedCollectionCountOrderByAggregateInput
   _max?: Prisma.KnowledgeBasedCollectionMaxOrderByAggregateInput
   _min?: Prisma.KnowledgeBasedCollectionMinOrderByAggregateInput
@@ -217,12 +231,14 @@ export type KnowledgeBasedCollectionScalarWhereWithAggregatesInput = {
   agentId?: Prisma.StringWithAggregatesFilter<"KnowledgeBasedCollection"> | string
   title?: Prisma.StringWithAggregatesFilter<"KnowledgeBasedCollection"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"KnowledgeBasedCollection"> | Date | string
+  createdBy?: Prisma.StringWithAggregatesFilter<"KnowledgeBasedCollection"> | string
 }
 
 export type KnowledgeBasedCollectionCreateInput = {
   id?: string
   title: string
   createdAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutKnowledgeBasedCollectionsInput
   agent: Prisma.AgentCreateNestedOneWithoutKnowledgeBasedCollectionsInput
   documents?: Prisma.DocumentCreateNestedManyWithoutKnowledgeBaseInput
 }
@@ -232,6 +248,7 @@ export type KnowledgeBasedCollectionUncheckedCreateInput = {
   agentId: string
   title: string
   createdAt?: Date | string
+  createdBy: string
   documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutKnowledgeBaseInput
 }
 
@@ -239,6 +256,7 @@ export type KnowledgeBasedCollectionUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutKnowledgeBasedCollectionsNestedInput
   agent?: Prisma.AgentUpdateOneRequiredWithoutKnowledgeBasedCollectionsNestedInput
   documents?: Prisma.DocumentUpdateManyWithoutKnowledgeBaseNestedInput
 }
@@ -248,6 +266,7 @@ export type KnowledgeBasedCollectionUncheckedUpdateInput = {
   agentId?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   documents?: Prisma.DocumentUncheckedUpdateManyWithoutKnowledgeBaseNestedInput
 }
 
@@ -256,6 +275,7 @@ export type KnowledgeBasedCollectionCreateManyInput = {
   agentId: string
   title: string
   createdAt?: Date | string
+  createdBy: string
 }
 
 export type KnowledgeBasedCollectionUpdateManyMutationInput = {
@@ -269,6 +289,7 @@ export type KnowledgeBasedCollectionUncheckedUpdateManyInput = {
   agentId?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type KnowledgeBasedCollectionListRelationFilter = {
@@ -286,6 +307,7 @@ export type KnowledgeBasedCollectionCountOrderByAggregateInput = {
   agentId?: Prisma.SortOrder
   title?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
 }
 
 export type KnowledgeBasedCollectionMaxOrderByAggregateInput = {
@@ -293,6 +315,7 @@ export type KnowledgeBasedCollectionMaxOrderByAggregateInput = {
   agentId?: Prisma.SortOrder
   title?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
 }
 
 export type KnowledgeBasedCollectionMinOrderByAggregateInput = {
@@ -300,11 +323,54 @@ export type KnowledgeBasedCollectionMinOrderByAggregateInput = {
   agentId?: Prisma.SortOrder
   title?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
 }
 
 export type KnowledgeBasedCollectionScalarRelationFilter = {
   is?: Prisma.KnowledgeBasedCollectionWhereInput
   isNot?: Prisma.KnowledgeBasedCollectionWhereInput
+}
+
+export type KnowledgeBasedCollectionCreateNestedManyWithoutUserInput = {
+  create?: Prisma.XOR<Prisma.KnowledgeBasedCollectionCreateWithoutUserInput, Prisma.KnowledgeBasedCollectionUncheckedCreateWithoutUserInput> | Prisma.KnowledgeBasedCollectionCreateWithoutUserInput[] | Prisma.KnowledgeBasedCollectionUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.KnowledgeBasedCollectionCreateOrConnectWithoutUserInput | Prisma.KnowledgeBasedCollectionCreateOrConnectWithoutUserInput[]
+  createMany?: Prisma.KnowledgeBasedCollectionCreateManyUserInputEnvelope
+  connect?: Prisma.KnowledgeBasedCollectionWhereUniqueInput | Prisma.KnowledgeBasedCollectionWhereUniqueInput[]
+}
+
+export type KnowledgeBasedCollectionUncheckedCreateNestedManyWithoutUserInput = {
+  create?: Prisma.XOR<Prisma.KnowledgeBasedCollectionCreateWithoutUserInput, Prisma.KnowledgeBasedCollectionUncheckedCreateWithoutUserInput> | Prisma.KnowledgeBasedCollectionCreateWithoutUserInput[] | Prisma.KnowledgeBasedCollectionUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.KnowledgeBasedCollectionCreateOrConnectWithoutUserInput | Prisma.KnowledgeBasedCollectionCreateOrConnectWithoutUserInput[]
+  createMany?: Prisma.KnowledgeBasedCollectionCreateManyUserInputEnvelope
+  connect?: Prisma.KnowledgeBasedCollectionWhereUniqueInput | Prisma.KnowledgeBasedCollectionWhereUniqueInput[]
+}
+
+export type KnowledgeBasedCollectionUpdateManyWithoutUserNestedInput = {
+  create?: Prisma.XOR<Prisma.KnowledgeBasedCollectionCreateWithoutUserInput, Prisma.KnowledgeBasedCollectionUncheckedCreateWithoutUserInput> | Prisma.KnowledgeBasedCollectionCreateWithoutUserInput[] | Prisma.KnowledgeBasedCollectionUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.KnowledgeBasedCollectionCreateOrConnectWithoutUserInput | Prisma.KnowledgeBasedCollectionCreateOrConnectWithoutUserInput[]
+  upsert?: Prisma.KnowledgeBasedCollectionUpsertWithWhereUniqueWithoutUserInput | Prisma.KnowledgeBasedCollectionUpsertWithWhereUniqueWithoutUserInput[]
+  createMany?: Prisma.KnowledgeBasedCollectionCreateManyUserInputEnvelope
+  set?: Prisma.KnowledgeBasedCollectionWhereUniqueInput | Prisma.KnowledgeBasedCollectionWhereUniqueInput[]
+  disconnect?: Prisma.KnowledgeBasedCollectionWhereUniqueInput | Prisma.KnowledgeBasedCollectionWhereUniqueInput[]
+  delete?: Prisma.KnowledgeBasedCollectionWhereUniqueInput | Prisma.KnowledgeBasedCollectionWhereUniqueInput[]
+  connect?: Prisma.KnowledgeBasedCollectionWhereUniqueInput | Prisma.KnowledgeBasedCollectionWhereUniqueInput[]
+  update?: Prisma.KnowledgeBasedCollectionUpdateWithWhereUniqueWithoutUserInput | Prisma.KnowledgeBasedCollectionUpdateWithWhereUniqueWithoutUserInput[]
+  updateMany?: Prisma.KnowledgeBasedCollectionUpdateManyWithWhereWithoutUserInput | Prisma.KnowledgeBasedCollectionUpdateManyWithWhereWithoutUserInput[]
+  deleteMany?: Prisma.KnowledgeBasedCollectionScalarWhereInput | Prisma.KnowledgeBasedCollectionScalarWhereInput[]
+}
+
+export type KnowledgeBasedCollectionUncheckedUpdateManyWithoutUserNestedInput = {
+  create?: Prisma.XOR<Prisma.KnowledgeBasedCollectionCreateWithoutUserInput, Prisma.KnowledgeBasedCollectionUncheckedCreateWithoutUserInput> | Prisma.KnowledgeBasedCollectionCreateWithoutUserInput[] | Prisma.KnowledgeBasedCollectionUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.KnowledgeBasedCollectionCreateOrConnectWithoutUserInput | Prisma.KnowledgeBasedCollectionCreateOrConnectWithoutUserInput[]
+  upsert?: Prisma.KnowledgeBasedCollectionUpsertWithWhereUniqueWithoutUserInput | Prisma.KnowledgeBasedCollectionUpsertWithWhereUniqueWithoutUserInput[]
+  createMany?: Prisma.KnowledgeBasedCollectionCreateManyUserInputEnvelope
+  set?: Prisma.KnowledgeBasedCollectionWhereUniqueInput | Prisma.KnowledgeBasedCollectionWhereUniqueInput[]
+  disconnect?: Prisma.KnowledgeBasedCollectionWhereUniqueInput | Prisma.KnowledgeBasedCollectionWhereUniqueInput[]
+  delete?: Prisma.KnowledgeBasedCollectionWhereUniqueInput | Prisma.KnowledgeBasedCollectionWhereUniqueInput[]
+  connect?: Prisma.KnowledgeBasedCollectionWhereUniqueInput | Prisma.KnowledgeBasedCollectionWhereUniqueInput[]
+  update?: Prisma.KnowledgeBasedCollectionUpdateWithWhereUniqueWithoutUserInput | Prisma.KnowledgeBasedCollectionUpdateWithWhereUniqueWithoutUserInput[]
+  updateMany?: Prisma.KnowledgeBasedCollectionUpdateManyWithWhereWithoutUserInput | Prisma.KnowledgeBasedCollectionUpdateManyWithWhereWithoutUserInput[]
+  deleteMany?: Prisma.KnowledgeBasedCollectionScalarWhereInput | Prisma.KnowledgeBasedCollectionScalarWhereInput[]
 }
 
 export type KnowledgeBasedCollectionCreateNestedManyWithoutAgentInput = {
@@ -363,10 +429,64 @@ export type KnowledgeBasedCollectionUpdateOneRequiredWithoutDocumentsNestedInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.KnowledgeBasedCollectionUpdateToOneWithWhereWithoutDocumentsInput, Prisma.KnowledgeBasedCollectionUpdateWithoutDocumentsInput>, Prisma.KnowledgeBasedCollectionUncheckedUpdateWithoutDocumentsInput>
 }
 
+export type KnowledgeBasedCollectionCreateWithoutUserInput = {
+  id?: string
+  title: string
+  createdAt?: Date | string
+  agent: Prisma.AgentCreateNestedOneWithoutKnowledgeBasedCollectionsInput
+  documents?: Prisma.DocumentCreateNestedManyWithoutKnowledgeBaseInput
+}
+
+export type KnowledgeBasedCollectionUncheckedCreateWithoutUserInput = {
+  id?: string
+  agentId: string
+  title: string
+  createdAt?: Date | string
+  documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutKnowledgeBaseInput
+}
+
+export type KnowledgeBasedCollectionCreateOrConnectWithoutUserInput = {
+  where: Prisma.KnowledgeBasedCollectionWhereUniqueInput
+  create: Prisma.XOR<Prisma.KnowledgeBasedCollectionCreateWithoutUserInput, Prisma.KnowledgeBasedCollectionUncheckedCreateWithoutUserInput>
+}
+
+export type KnowledgeBasedCollectionCreateManyUserInputEnvelope = {
+  data: Prisma.KnowledgeBasedCollectionCreateManyUserInput | Prisma.KnowledgeBasedCollectionCreateManyUserInput[]
+  skipDuplicates?: boolean
+}
+
+export type KnowledgeBasedCollectionUpsertWithWhereUniqueWithoutUserInput = {
+  where: Prisma.KnowledgeBasedCollectionWhereUniqueInput
+  update: Prisma.XOR<Prisma.KnowledgeBasedCollectionUpdateWithoutUserInput, Prisma.KnowledgeBasedCollectionUncheckedUpdateWithoutUserInput>
+  create: Prisma.XOR<Prisma.KnowledgeBasedCollectionCreateWithoutUserInput, Prisma.KnowledgeBasedCollectionUncheckedCreateWithoutUserInput>
+}
+
+export type KnowledgeBasedCollectionUpdateWithWhereUniqueWithoutUserInput = {
+  where: Prisma.KnowledgeBasedCollectionWhereUniqueInput
+  data: Prisma.XOR<Prisma.KnowledgeBasedCollectionUpdateWithoutUserInput, Prisma.KnowledgeBasedCollectionUncheckedUpdateWithoutUserInput>
+}
+
+export type KnowledgeBasedCollectionUpdateManyWithWhereWithoutUserInput = {
+  where: Prisma.KnowledgeBasedCollectionScalarWhereInput
+  data: Prisma.XOR<Prisma.KnowledgeBasedCollectionUpdateManyMutationInput, Prisma.KnowledgeBasedCollectionUncheckedUpdateManyWithoutUserInput>
+}
+
+export type KnowledgeBasedCollectionScalarWhereInput = {
+  AND?: Prisma.KnowledgeBasedCollectionScalarWhereInput | Prisma.KnowledgeBasedCollectionScalarWhereInput[]
+  OR?: Prisma.KnowledgeBasedCollectionScalarWhereInput[]
+  NOT?: Prisma.KnowledgeBasedCollectionScalarWhereInput | Prisma.KnowledgeBasedCollectionScalarWhereInput[]
+  id?: Prisma.StringFilter<"KnowledgeBasedCollection"> | string
+  agentId?: Prisma.StringFilter<"KnowledgeBasedCollection"> | string
+  title?: Prisma.StringFilter<"KnowledgeBasedCollection"> | string
+  createdAt?: Prisma.DateTimeFilter<"KnowledgeBasedCollection"> | Date | string
+  createdBy?: Prisma.StringFilter<"KnowledgeBasedCollection"> | string
+}
+
 export type KnowledgeBasedCollectionCreateWithoutAgentInput = {
   id?: string
   title: string
   createdAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutKnowledgeBasedCollectionsInput
   documents?: Prisma.DocumentCreateNestedManyWithoutKnowledgeBaseInput
 }
 
@@ -374,6 +494,7 @@ export type KnowledgeBasedCollectionUncheckedCreateWithoutAgentInput = {
   id?: string
   title: string
   createdAt?: Date | string
+  createdBy: string
   documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutKnowledgeBaseInput
 }
 
@@ -403,20 +524,11 @@ export type KnowledgeBasedCollectionUpdateManyWithWhereWithoutAgentInput = {
   data: Prisma.XOR<Prisma.KnowledgeBasedCollectionUpdateManyMutationInput, Prisma.KnowledgeBasedCollectionUncheckedUpdateManyWithoutAgentInput>
 }
 
-export type KnowledgeBasedCollectionScalarWhereInput = {
-  AND?: Prisma.KnowledgeBasedCollectionScalarWhereInput | Prisma.KnowledgeBasedCollectionScalarWhereInput[]
-  OR?: Prisma.KnowledgeBasedCollectionScalarWhereInput[]
-  NOT?: Prisma.KnowledgeBasedCollectionScalarWhereInput | Prisma.KnowledgeBasedCollectionScalarWhereInput[]
-  id?: Prisma.StringFilter<"KnowledgeBasedCollection"> | string
-  agentId?: Prisma.StringFilter<"KnowledgeBasedCollection"> | string
-  title?: Prisma.StringFilter<"KnowledgeBasedCollection"> | string
-  createdAt?: Prisma.DateTimeFilter<"KnowledgeBasedCollection"> | Date | string
-}
-
 export type KnowledgeBasedCollectionCreateWithoutDocumentsInput = {
   id?: string
   title: string
   createdAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutKnowledgeBasedCollectionsInput
   agent: Prisma.AgentCreateNestedOneWithoutKnowledgeBasedCollectionsInput
 }
 
@@ -425,6 +537,7 @@ export type KnowledgeBasedCollectionUncheckedCreateWithoutDocumentsInput = {
   agentId: string
   title: string
   createdAt?: Date | string
+  createdBy: string
 }
 
 export type KnowledgeBasedCollectionCreateOrConnectWithoutDocumentsInput = {
@@ -447,10 +560,42 @@ export type KnowledgeBasedCollectionUpdateWithoutDocumentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutKnowledgeBasedCollectionsNestedInput
   agent?: Prisma.AgentUpdateOneRequiredWithoutKnowledgeBasedCollectionsNestedInput
 }
 
 export type KnowledgeBasedCollectionUncheckedUpdateWithoutDocumentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  agentId?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
+}
+
+export type KnowledgeBasedCollectionCreateManyUserInput = {
+  id?: string
+  agentId: string
+  title: string
+  createdAt?: Date | string
+}
+
+export type KnowledgeBasedCollectionUpdateWithoutUserInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  agent?: Prisma.AgentUpdateOneRequiredWithoutKnowledgeBasedCollectionsNestedInput
+  documents?: Prisma.DocumentUpdateManyWithoutKnowledgeBaseNestedInput
+}
+
+export type KnowledgeBasedCollectionUncheckedUpdateWithoutUserInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  agentId?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  documents?: Prisma.DocumentUncheckedUpdateManyWithoutKnowledgeBaseNestedInput
+}
+
+export type KnowledgeBasedCollectionUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   agentId?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
@@ -461,12 +606,14 @@ export type KnowledgeBasedCollectionCreateManyAgentInput = {
   id?: string
   title: string
   createdAt?: Date | string
+  createdBy: string
 }
 
 export type KnowledgeBasedCollectionUpdateWithoutAgentInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutKnowledgeBasedCollectionsNestedInput
   documents?: Prisma.DocumentUpdateManyWithoutKnowledgeBaseNestedInput
 }
 
@@ -474,6 +621,7 @@ export type KnowledgeBasedCollectionUncheckedUpdateWithoutAgentInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
   documents?: Prisma.DocumentUncheckedUpdateManyWithoutKnowledgeBaseNestedInput
 }
 
@@ -481,6 +629,7 @@ export type KnowledgeBasedCollectionUncheckedUpdateManyWithoutAgentInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 
@@ -519,6 +668,8 @@ export type KnowledgeBasedCollectionSelect<ExtArgs extends runtime.Types.Extensi
   agentId?: boolean
   title?: boolean
   createdAt?: boolean
+  createdBy?: boolean
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   agent?: boolean | Prisma.AgentDefaultArgs<ExtArgs>
   documents?: boolean | Prisma.KnowledgeBasedCollection$documentsArgs<ExtArgs>
   _count?: boolean | Prisma.KnowledgeBasedCollectionCountOutputTypeDefaultArgs<ExtArgs>
@@ -529,6 +680,8 @@ export type KnowledgeBasedCollectionSelectCreateManyAndReturn<ExtArgs extends ru
   agentId?: boolean
   title?: boolean
   createdAt?: boolean
+  createdBy?: boolean
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   agent?: boolean | Prisma.AgentDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["knowledgeBasedCollection"]>
 
@@ -537,6 +690,8 @@ export type KnowledgeBasedCollectionSelectUpdateManyAndReturn<ExtArgs extends ru
   agentId?: boolean
   title?: boolean
   createdAt?: boolean
+  createdBy?: boolean
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   agent?: boolean | Prisma.AgentDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["knowledgeBasedCollection"]>
 
@@ -545,24 +700,29 @@ export type KnowledgeBasedCollectionSelectScalar = {
   agentId?: boolean
   title?: boolean
   createdAt?: boolean
+  createdBy?: boolean
 }
 
-export type KnowledgeBasedCollectionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "agentId" | "title" | "createdAt", ExtArgs["result"]["knowledgeBasedCollection"]>
+export type KnowledgeBasedCollectionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "agentId" | "title" | "createdAt" | "createdBy", ExtArgs["result"]["knowledgeBasedCollection"]>
 export type KnowledgeBasedCollectionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   agent?: boolean | Prisma.AgentDefaultArgs<ExtArgs>
   documents?: boolean | Prisma.KnowledgeBasedCollection$documentsArgs<ExtArgs>
   _count?: boolean | Prisma.KnowledgeBasedCollectionCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type KnowledgeBasedCollectionIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   agent?: boolean | Prisma.AgentDefaultArgs<ExtArgs>
 }
 export type KnowledgeBasedCollectionIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   agent?: boolean | Prisma.AgentDefaultArgs<ExtArgs>
 }
 
 export type $KnowledgeBasedCollectionPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "KnowledgeBasedCollection"
   objects: {
+    user: Prisma.$UserPayload<ExtArgs>
     agent: Prisma.$AgentPayload<ExtArgs>
     documents: Prisma.$DocumentPayload<ExtArgs>[]
   }
@@ -571,6 +731,7 @@ export type $KnowledgeBasedCollectionPayload<ExtArgs extends runtime.Types.Exten
     agentId: string
     title: string
     createdAt: Date
+    createdBy: string
   }, ExtArgs["result"]["knowledgeBasedCollection"]>
   composites: {}
 }
@@ -965,6 +1126,7 @@ readonly fields: KnowledgeBasedCollectionFieldRefs;
  */
 export interface Prisma__KnowledgeBasedCollectionClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   agent<T extends Prisma.AgentDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AgentDefaultArgs<ExtArgs>>): Prisma.Prisma__AgentClient<runtime.Types.Result.GetResult<Prisma.$AgentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   documents<T extends Prisma.KnowledgeBasedCollection$documentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.KnowledgeBasedCollection$documentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DocumentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
@@ -1000,6 +1162,7 @@ export interface KnowledgeBasedCollectionFieldRefs {
   readonly agentId: Prisma.FieldRef<"KnowledgeBasedCollection", 'String'>
   readonly title: Prisma.FieldRef<"KnowledgeBasedCollection", 'String'>
   readonly createdAt: Prisma.FieldRef<"KnowledgeBasedCollection", 'DateTime'>
+  readonly createdBy: Prisma.FieldRef<"KnowledgeBasedCollection", 'String'>
 }
     
 

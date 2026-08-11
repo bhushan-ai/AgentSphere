@@ -1,17 +1,86 @@
 import { Request, Response } from "express";
 import { prisma } from "../lib/prisma";
 import { randomUUID } from "crypto";
-import {
-  DeleteObjectCommand,
-  GetObjectCommand,
-  PutObjectCommand,
-} from "@aws-sdk/client-s3";
+import { DeleteObjectCommand, PutObjectCommand } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { requireWorkspaceRole } from "../middleware/checkRole";
 import { s3Client } from "../services/aws/s3";
 import { documentQueue } from "../services/queue";
-import { qdrantClient, vectorStore } from "../services/qdrant/connection";
-import { match } from "assert";
+import { qdrantClient } from "../services/qdrant/connection";
+
+//create knowledgeBase
+export const knowledgeBaseCollection = async (req: Request, res: Response) => {
+  try {
+    const { title } = req.body;
+    const agentId = req.params.agentId;
+    const userId = req.user?.id;
+
+    if (!title?.trim()) {
+      res.status(400).json({
+        success: false,
+        message: "All fields are required",
+      });
+      return;
+    }
+
+    if (!userId) {
+      res.status(401).json({
+        success: false,
+        message: "Unauthorized",
+      });
+      return;
+    }
+
+    if (!agentId) {
+      res.status(400).json({
+        success: false,
+        message: "agentId required ",
+      });
+      return;
+    }
+
+    //check agent exist or not
+    const agent = await prisma.agent.findUnique({
+      where: {
+        id: agentId as string,
+      },
+    });
+
+    if (!agent) {
+      res.status(404).json({
+        success: false,
+        message: "Agent not found",
+      });
+      return;
+    }
+
+    //check role of user
+    await requireWorkspaceRole(agent.workspaceId, userId, ["OWNER", "ADMIN"]);
+
+    const knowledgeBaseCollection =
+      await prisma.knowledgeBasedCollection.create({
+        data: {
+          title,
+          agentId: agentId as string,
+          createdBy: userId,
+        },
+      });
+
+    res.status(201).json({
+      success: true,
+      message: "knowledgeBaseCollection created successfully",
+      data: knowledgeBaseCollection,
+    });
+  } catch (error: unknown) {
+    const err = error as Error;
+    console.log(`Something went wrong while creating the knowledgeBase`, err);
+    res.status(500).json({
+      success: false,
+      message: "Server side error",
+      error: err.message,
+    });
+  }
+};
 
 //create presigned url
 export const createPreSignedUrl = async (req: Request, res: Response) => {
@@ -235,7 +304,7 @@ export const getDocuments = async (req: Request, res: Response) => {
 
     const documents = await prisma.document.findMany({
       where: {
-       knowledgeBasedCollectionId: knowledgeBaseId  as string,
+        knowledgeBasedCollectionId: knowledgeBaseId as string,
       },
       orderBy: {
         createdAt: "desc",

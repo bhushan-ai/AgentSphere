@@ -178,6 +178,7 @@ export type UserWhereInput = {
   workspaceMembers?: Prisma.WorkspaceMemberListRelationFilter
   conversations?: Prisma.ConversationListRelationFilter
   messages?: Prisma.MessageListRelationFilter
+  knowledgeBasedCollections?: Prisma.KnowledgeBasedCollectionListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -189,6 +190,7 @@ export type UserOrderByWithRelationInput = {
   workspaceMembers?: Prisma.WorkspaceMemberOrderByRelationAggregateInput
   conversations?: Prisma.ConversationOrderByRelationAggregateInput
   messages?: Prisma.MessageOrderByRelationAggregateInput
+  knowledgeBasedCollections?: Prisma.KnowledgeBasedCollectionOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -203,6 +205,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   workspaceMembers?: Prisma.WorkspaceMemberListRelationFilter
   conversations?: Prisma.ConversationListRelationFilter
   messages?: Prisma.MessageListRelationFilter
+  knowledgeBasedCollections?: Prisma.KnowledgeBasedCollectionListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -234,6 +237,7 @@ export type UserCreateInput = {
   workspaceMembers?: Prisma.WorkspaceMemberCreateNestedManyWithoutUserInput
   conversations?: Prisma.ConversationCreateNestedManyWithoutUserInput
   messages?: Prisma.MessageCreateNestedManyWithoutSenderInput
+  knowledgeBasedCollections?: Prisma.KnowledgeBasedCollectionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -245,6 +249,7 @@ export type UserUncheckedCreateInput = {
   workspaceMembers?: Prisma.WorkspaceMemberUncheckedCreateNestedManyWithoutUserInput
   conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutUserInput
   messages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
+  knowledgeBasedCollections?: Prisma.KnowledgeBasedCollectionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -256,6 +261,7 @@ export type UserUpdateInput = {
   workspaceMembers?: Prisma.WorkspaceMemberUpdateManyWithoutUserNestedInput
   conversations?: Prisma.ConversationUpdateManyWithoutUserNestedInput
   messages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
+  knowledgeBasedCollections?: Prisma.KnowledgeBasedCollectionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -267,6 +273,7 @@ export type UserUncheckedUpdateInput = {
   workspaceMembers?: Prisma.WorkspaceMemberUncheckedUpdateManyWithoutUserNestedInput
   conversations?: Prisma.ConversationUncheckedUpdateManyWithoutUserNestedInput
   messages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
+  knowledgeBasedCollections?: Prisma.KnowledgeBasedCollectionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -387,6 +394,20 @@ export type UserUpdateOneWithoutMessagesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutMessagesInput, Prisma.UserUpdateWithoutMessagesInput>, Prisma.UserUncheckedUpdateWithoutMessagesInput>
 }
 
+export type UserCreateNestedOneWithoutKnowledgeBasedCollectionsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutKnowledgeBasedCollectionsInput, Prisma.UserUncheckedCreateWithoutKnowledgeBasedCollectionsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutKnowledgeBasedCollectionsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutKnowledgeBasedCollectionsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutKnowledgeBasedCollectionsInput, Prisma.UserUncheckedCreateWithoutKnowledgeBasedCollectionsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutKnowledgeBasedCollectionsInput
+  upsert?: Prisma.UserUpsertWithoutKnowledgeBasedCollectionsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutKnowledgeBasedCollectionsInput, Prisma.UserUpdateWithoutKnowledgeBasedCollectionsInput>, Prisma.UserUncheckedUpdateWithoutKnowledgeBasedCollectionsInput>
+}
+
 export type UserCreateWithoutWorkspacesInput = {
   id?: string
   email: string
@@ -395,6 +416,7 @@ export type UserCreateWithoutWorkspacesInput = {
   workspaceMembers?: Prisma.WorkspaceMemberCreateNestedManyWithoutUserInput
   conversations?: Prisma.ConversationCreateNestedManyWithoutUserInput
   messages?: Prisma.MessageCreateNestedManyWithoutSenderInput
+  knowledgeBasedCollections?: Prisma.KnowledgeBasedCollectionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutWorkspacesInput = {
@@ -405,6 +427,7 @@ export type UserUncheckedCreateWithoutWorkspacesInput = {
   workspaceMembers?: Prisma.WorkspaceMemberUncheckedCreateNestedManyWithoutUserInput
   conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutUserInput
   messages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
+  knowledgeBasedCollections?: Prisma.KnowledgeBasedCollectionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutWorkspacesInput = {
@@ -431,6 +454,7 @@ export type UserUpdateWithoutWorkspacesInput = {
   workspaceMembers?: Prisma.WorkspaceMemberUpdateManyWithoutUserNestedInput
   conversations?: Prisma.ConversationUpdateManyWithoutUserNestedInput
   messages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
+  knowledgeBasedCollections?: Prisma.KnowledgeBasedCollectionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutWorkspacesInput = {
@@ -441,6 +465,7 @@ export type UserUncheckedUpdateWithoutWorkspacesInput = {
   workspaceMembers?: Prisma.WorkspaceMemberUncheckedUpdateManyWithoutUserNestedInput
   conversations?: Prisma.ConversationUncheckedUpdateManyWithoutUserNestedInput
   messages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
+  knowledgeBasedCollections?: Prisma.KnowledgeBasedCollectionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutWorkspaceMembersInput = {
@@ -451,6 +476,7 @@ export type UserCreateWithoutWorkspaceMembersInput = {
   workspaces?: Prisma.WorkspaceCreateNestedManyWithoutOwnerInput
   conversations?: Prisma.ConversationCreateNestedManyWithoutUserInput
   messages?: Prisma.MessageCreateNestedManyWithoutSenderInput
+  knowledgeBasedCollections?: Prisma.KnowledgeBasedCollectionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutWorkspaceMembersInput = {
@@ -461,6 +487,7 @@ export type UserUncheckedCreateWithoutWorkspaceMembersInput = {
   workspaces?: Prisma.WorkspaceUncheckedCreateNestedManyWithoutOwnerInput
   conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutUserInput
   messages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
+  knowledgeBasedCollections?: Prisma.KnowledgeBasedCollectionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutWorkspaceMembersInput = {
@@ -487,6 +514,7 @@ export type UserUpdateWithoutWorkspaceMembersInput = {
   workspaces?: Prisma.WorkspaceUpdateManyWithoutOwnerNestedInput
   conversations?: Prisma.ConversationUpdateManyWithoutUserNestedInput
   messages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
+  knowledgeBasedCollections?: Prisma.KnowledgeBasedCollectionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutWorkspaceMembersInput = {
@@ -497,6 +525,7 @@ export type UserUncheckedUpdateWithoutWorkspaceMembersInput = {
   workspaces?: Prisma.WorkspaceUncheckedUpdateManyWithoutOwnerNestedInput
   conversations?: Prisma.ConversationUncheckedUpdateManyWithoutUserNestedInput
   messages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
+  knowledgeBasedCollections?: Prisma.KnowledgeBasedCollectionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutConversationsInput = {
@@ -507,6 +536,7 @@ export type UserCreateWithoutConversationsInput = {
   workspaces?: Prisma.WorkspaceCreateNestedManyWithoutOwnerInput
   workspaceMembers?: Prisma.WorkspaceMemberCreateNestedManyWithoutUserInput
   messages?: Prisma.MessageCreateNestedManyWithoutSenderInput
+  knowledgeBasedCollections?: Prisma.KnowledgeBasedCollectionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutConversationsInput = {
@@ -517,6 +547,7 @@ export type UserUncheckedCreateWithoutConversationsInput = {
   workspaces?: Prisma.WorkspaceUncheckedCreateNestedManyWithoutOwnerInput
   workspaceMembers?: Prisma.WorkspaceMemberUncheckedCreateNestedManyWithoutUserInput
   messages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
+  knowledgeBasedCollections?: Prisma.KnowledgeBasedCollectionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutConversationsInput = {
@@ -543,6 +574,7 @@ export type UserUpdateWithoutConversationsInput = {
   workspaces?: Prisma.WorkspaceUpdateManyWithoutOwnerNestedInput
   workspaceMembers?: Prisma.WorkspaceMemberUpdateManyWithoutUserNestedInput
   messages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
+  knowledgeBasedCollections?: Prisma.KnowledgeBasedCollectionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutConversationsInput = {
@@ -553,6 +585,7 @@ export type UserUncheckedUpdateWithoutConversationsInput = {
   workspaces?: Prisma.WorkspaceUncheckedUpdateManyWithoutOwnerNestedInput
   workspaceMembers?: Prisma.WorkspaceMemberUncheckedUpdateManyWithoutUserNestedInput
   messages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
+  knowledgeBasedCollections?: Prisma.KnowledgeBasedCollectionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutMessagesInput = {
@@ -563,6 +596,7 @@ export type UserCreateWithoutMessagesInput = {
   workspaces?: Prisma.WorkspaceCreateNestedManyWithoutOwnerInput
   workspaceMembers?: Prisma.WorkspaceMemberCreateNestedManyWithoutUserInput
   conversations?: Prisma.ConversationCreateNestedManyWithoutUserInput
+  knowledgeBasedCollections?: Prisma.KnowledgeBasedCollectionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutMessagesInput = {
@@ -573,6 +607,7 @@ export type UserUncheckedCreateWithoutMessagesInput = {
   workspaces?: Prisma.WorkspaceUncheckedCreateNestedManyWithoutOwnerInput
   workspaceMembers?: Prisma.WorkspaceMemberUncheckedCreateNestedManyWithoutUserInput
   conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutUserInput
+  knowledgeBasedCollections?: Prisma.KnowledgeBasedCollectionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutMessagesInput = {
@@ -599,6 +634,7 @@ export type UserUpdateWithoutMessagesInput = {
   workspaces?: Prisma.WorkspaceUpdateManyWithoutOwnerNestedInput
   workspaceMembers?: Prisma.WorkspaceMemberUpdateManyWithoutUserNestedInput
   conversations?: Prisma.ConversationUpdateManyWithoutUserNestedInput
+  knowledgeBasedCollections?: Prisma.KnowledgeBasedCollectionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutMessagesInput = {
@@ -609,6 +645,67 @@ export type UserUncheckedUpdateWithoutMessagesInput = {
   workspaces?: Prisma.WorkspaceUncheckedUpdateManyWithoutOwnerNestedInput
   workspaceMembers?: Prisma.WorkspaceMemberUncheckedUpdateManyWithoutUserNestedInput
   conversations?: Prisma.ConversationUncheckedUpdateManyWithoutUserNestedInput
+  knowledgeBasedCollections?: Prisma.KnowledgeBasedCollectionUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutKnowledgeBasedCollectionsInput = {
+  id?: string
+  email: string
+  name?: string | null
+  password: string
+  workspaces?: Prisma.WorkspaceCreateNestedManyWithoutOwnerInput
+  workspaceMembers?: Prisma.WorkspaceMemberCreateNestedManyWithoutUserInput
+  conversations?: Prisma.ConversationCreateNestedManyWithoutUserInput
+  messages?: Prisma.MessageCreateNestedManyWithoutSenderInput
+}
+
+export type UserUncheckedCreateWithoutKnowledgeBasedCollectionsInput = {
+  id?: string
+  email: string
+  name?: string | null
+  password: string
+  workspaces?: Prisma.WorkspaceUncheckedCreateNestedManyWithoutOwnerInput
+  workspaceMembers?: Prisma.WorkspaceMemberUncheckedCreateNestedManyWithoutUserInput
+  conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutUserInput
+  messages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
+}
+
+export type UserCreateOrConnectWithoutKnowledgeBasedCollectionsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutKnowledgeBasedCollectionsInput, Prisma.UserUncheckedCreateWithoutKnowledgeBasedCollectionsInput>
+}
+
+export type UserUpsertWithoutKnowledgeBasedCollectionsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutKnowledgeBasedCollectionsInput, Prisma.UserUncheckedUpdateWithoutKnowledgeBasedCollectionsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutKnowledgeBasedCollectionsInput, Prisma.UserUncheckedCreateWithoutKnowledgeBasedCollectionsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutKnowledgeBasedCollectionsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutKnowledgeBasedCollectionsInput, Prisma.UserUncheckedUpdateWithoutKnowledgeBasedCollectionsInput>
+}
+
+export type UserUpdateWithoutKnowledgeBasedCollectionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  workspaces?: Prisma.WorkspaceUpdateManyWithoutOwnerNestedInput
+  workspaceMembers?: Prisma.WorkspaceMemberUpdateManyWithoutUserNestedInput
+  conversations?: Prisma.ConversationUpdateManyWithoutUserNestedInput
+  messages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
+}
+
+export type UserUncheckedUpdateWithoutKnowledgeBasedCollectionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  workspaces?: Prisma.WorkspaceUncheckedUpdateManyWithoutOwnerNestedInput
+  workspaceMembers?: Prisma.WorkspaceMemberUncheckedUpdateManyWithoutUserNestedInput
+  conversations?: Prisma.ConversationUncheckedUpdateManyWithoutUserNestedInput
+  messages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
 }
 
 
@@ -621,6 +718,7 @@ export type UserCountOutputType = {
   workspaceMembers: number
   conversations: number
   messages: number
+  knowledgeBasedCollections: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -628,6 +726,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   workspaceMembers?: boolean | UserCountOutputTypeCountWorkspaceMembersArgs
   conversations?: boolean | UserCountOutputTypeCountConversationsArgs
   messages?: boolean | UserCountOutputTypeCountMessagesArgs
+  knowledgeBasedCollections?: boolean | UserCountOutputTypeCountKnowledgeBasedCollectionsArgs
 }
 
 /**
@@ -668,6 +767,13 @@ export type UserCountOutputTypeCountMessagesArgs<ExtArgs extends runtime.Types.E
   where?: Prisma.MessageWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountKnowledgeBasedCollectionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.KnowledgeBasedCollectionWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -678,6 +784,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   workspaceMembers?: boolean | Prisma.User$workspaceMembersArgs<ExtArgs>
   conversations?: boolean | Prisma.User$conversationsArgs<ExtArgs>
   messages?: boolean | Prisma.User$messagesArgs<ExtArgs>
+  knowledgeBasedCollections?: boolean | Prisma.User$knowledgeBasedCollectionsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -708,6 +815,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   workspaceMembers?: boolean | Prisma.User$workspaceMembersArgs<ExtArgs>
   conversations?: boolean | Prisma.User$conversationsArgs<ExtArgs>
   messages?: boolean | Prisma.User$messagesArgs<ExtArgs>
+  knowledgeBasedCollections?: boolean | Prisma.User$knowledgeBasedCollectionsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -720,6 +828,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     workspaceMembers: Prisma.$WorkspaceMemberPayload<ExtArgs>[]
     conversations: Prisma.$ConversationPayload<ExtArgs>[]
     messages: Prisma.$MessagePayload<ExtArgs>[]
+    knowledgeBasedCollections: Prisma.$KnowledgeBasedCollectionPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1124,6 +1233,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   workspaceMembers<T extends Prisma.User$workspaceMembersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$workspaceMembersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WorkspaceMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   conversations<T extends Prisma.User$conversationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$conversationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ConversationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   messages<T extends Prisma.User$messagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$messagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  knowledgeBasedCollections<T extends Prisma.User$knowledgeBasedCollectionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$knowledgeBasedCollectionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$KnowledgeBasedCollectionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1643,6 +1753,30 @@ export type User$messagesArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   take?: number
   skip?: number
   distinct?: Prisma.MessageScalarFieldEnum | Prisma.MessageScalarFieldEnum[]
+}
+
+/**
+ * User.knowledgeBasedCollections
+ */
+export type User$knowledgeBasedCollectionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the KnowledgeBasedCollection
+   */
+  select?: Prisma.KnowledgeBasedCollectionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the KnowledgeBasedCollection
+   */
+  omit?: Prisma.KnowledgeBasedCollectionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.KnowledgeBasedCollectionInclude<ExtArgs> | null
+  where?: Prisma.KnowledgeBasedCollectionWhereInput
+  orderBy?: Prisma.KnowledgeBasedCollectionOrderByWithRelationInput | Prisma.KnowledgeBasedCollectionOrderByWithRelationInput[]
+  cursor?: Prisma.KnowledgeBasedCollectionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.KnowledgeBasedCollectionScalarFieldEnum | Prisma.KnowledgeBasedCollectionScalarFieldEnum[]
 }
 
 /**
