@@ -11,7 +11,7 @@ import { createWriteStream } from "fs";
 import { mkdir } from "fs/promises";
 import { pipeline } from "stream/promises";
 import path from "path";
-import { embeddings, qdrantClient, vectorStore } from "./qdrant/connection";
+import { embeddings, qdrantClient, storeToDb } from "./qdrant/connection";
 import { unlink } from "fs/promises";
 import crypto, { randomUUID } from "crypto";
 
@@ -53,7 +53,11 @@ const documentWorker = new Worker(
 
       const response = await s3Client.send(command);
 
-      //write the file in temporary path
+      if (!response.Body) {
+        throw new Error("S3 returned an empty body reference");
+      }
+
+      // write the file in temporary path
       const tempDir = path.join(process.cwd(), "temp");
       await mkdir(tempDir, {
         recursive: true,
@@ -71,10 +75,7 @@ const documentWorker = new Worker(
 
       // Extract text
       let docs;
-      const documentType = document.fileName
-        .split(".")
-        .pop()
-        ?.toLocaleLowerCase();
+      const documentType = document.fileName.split(".").pop()?.toLowerCase();
 
       switch (documentType) {
         case "pdf":
@@ -95,15 +96,32 @@ const documentWorker = new Worker(
 
       // text splitter
       const splitter = new RecursiveCharacterTextSplitter({
-        chunkSize: 1000,
+        chunkSize: 800,
         chunkOverlap: 50,
       });
 
       // Chunk
       const chunk = await splitter.splitDocuments(docs);
 
+      // Remove empty strings, control symbols, and excessive spacing bugs
+      const sanitizedChunks = chunk
+        .map((doc) => {
+          const cleanText = doc.pageContent
+            .replace(/[\x00-\x1F\x7F-\x9F]/g, "") // Strip invisible control characters
+            .replace(/\s+/g, " ") // Normalize messy whitespaces
+            .trim();
+
+          return { ...doc, pageContent: cleanText };
+        })
+        .filter((doc) => doc.pageContent.length > 5); // Evict any completely vacuous chunks
+
+      if (sanitizedChunks.length === 0) {
+        throw new Error(
+          "Aborting: No embeddable raw text remains after document sanitization processing.",
+        );
+      }
       // attach meta data
-      const chunksWithMetadata = chunk.map((doc) => ({
+      const chunksWithMetadata = sanitizedChunks.map((doc) => ({
         ...doc,
         metadata: {
           ...doc.metadata,
@@ -114,49 +132,36 @@ const documentWorker = new Worker(
       }));
 
       //storing to db
-      const BATCH_SIZE = 20;
+      console.log(
+        `Generating embeddings and uploading ${chunksWithMetadata.length} chunks to qdrant`,
+      );
 
+      const BATCH_SIZE = 10;
+      
       for (let i = 0; i < chunksWithMetadata.length; i += BATCH_SIZE) {
-        const batch = chunksWithMetadata.slice(i, i + BATCH_SIZE);
-
-        const vectors = await embeddings.embedDocuments(
-          batch.map((doc) => doc.pageContent),
+        const currentBatch = chunksWithMetadata.slice(i, i + BATCH_SIZE);
+        console.log(
+          `📡 Processing subset batch: chunks ${i} to ${Math.min(i + BATCH_SIZE, chunksWithMetadata.length)}...`,
         );
 
-        const points = batch.map((doc, index) => {
-          const vector = vectors[index];
+        // Pass the safe sub-batch slice cleanly down to Langchain
+        await storeToDb(currentBatch);
 
-          if (!vector || vector.length !== 3072) {
-            throw new Error(
-              `Invalid embedding at index ${index}: ${vector?.length ?? 0}`,
-            );
-          }
-
-          return {
-            id: randomUUID(),
-            vector,
-            payload: {
-              pageContent: doc.pageContent,
-              metadata: doc.metadata,
-            },
-          };
-        });
-
-        await qdrantClient.upsert("agent-sphere", {
-          wait: true,
-          points,
-        });
-
-        //update the status to READY
-        await prisma.document.update({
-          where: {
-            id: documentId,
-          },
-          data: {
-            status: "READY",
-          },
-        });
+        // Introduce a minor delay (e.g. 500ms) to allow the API limits window to settle down smoothly
+        await new Promise((resolve) => setTimeout(resolve, 800));
       }
+
+      console.log(" Successfully saved vectors to Qdrant!");
+
+      //update the status to READY
+      await prisma.document.update({
+        where: {
+          id: documentId,
+        },
+        data: {
+          status: "READY",
+        },
+      });
     } catch (error) {
       await prisma.document.update({
         where: {

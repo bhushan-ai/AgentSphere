@@ -109,7 +109,7 @@ export const sendMessage = async (
           agentId: conversation.agentId,
         },
       });
-      console.log("KNOWLEDGE BASE:", knowledgeBase);
+
       if (!knowledgeBase) {
         throw new Error("Knowledge base not found");
       }
@@ -138,8 +138,6 @@ export const sendMessage = async (
       });
       const relevantChunks = await vectorSearcher.invoke(message.content);
 
-      console.log("RELEVANT CHUNKS:", relevantChunks);
-
       const contextFromChunks = relevantChunks
         .map((doc) => {
           return ` 
@@ -150,12 +148,12 @@ export const sendMessage = async (
         })
         .join("\n\n");
 
-      console.log(
-        relevantChunks.map((doc) => ({
-          content: doc.pageContent,
-          metadata: doc.metadata,
-        })),
-      );
+      // console.log(
+      //   relevantChunks.map((doc) => ({
+      //     content: doc.pageContent,
+      //     metadata: doc.metadata,
+      //   })),
+      // );
 
       context = `
         Use the following retrieved context to answer the user's question.
@@ -164,7 +162,6 @@ export const sendMessage = async (
         `;
     }
 
-    console.log("RAG CONTEXT:", context);
     const prompt = `${context}
 
   Current Question:
