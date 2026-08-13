@@ -4,11 +4,14 @@ node_modules
 .claude
 .windsurf
 
+#Qdrant local storage
+qdrant_storage/
+
 # output
 out
 dist
 *.tgz
-
+r+
 # code coverage
 coverage
 *.lcov

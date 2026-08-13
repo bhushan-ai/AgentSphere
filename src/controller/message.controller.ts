@@ -115,16 +115,11 @@ export const sendMessage = async (
       }
 
       //retrieve from qdrant
-      const vectorStore = await QdrantVectorStore.fromExistingCollection(
-        embeddings,
-        {
-          client: qdrantClient,
-          collectionName: "agent-sphere",
-        },
-      );
+      const queryVector = await embeddings.embedQuery(message.content);
 
-      const vectorSearcher = vectorStore.asRetriever({
-        k: 3,
+      const results = await qdrantClient.query(`agent-sphere`, {
+        query: queryVector,
+        limit: 5,
         filter: {
           must: [
             {
@@ -135,30 +130,43 @@ export const sendMessage = async (
             },
           ],
         },
+        with_payload: true,
       });
-      const relevantChunks = await vectorSearcher.invoke(message.content);
 
-      const contextFromChunks = relevantChunks
-        .map((doc) => {
+      const contextFromChunks = results.points
+        .map((points) => {
+          const payload = points.payload as {
+            pageContent: string;
+            metadata: {
+              fileName?: string;
+              loc?: {
+                pageNumber?: number;
+              };
+            };
+          };
+
           return ` 
-        Sources: ${doc.metadata.fileName ?? "unknown"}
-        Page: ${doc.metadata.loc?.pageNumber ?? "N/M"}
+        Sources: ${payload.metadata.fileName ?? "unknown"}
+        Page: ${payload.metadata.loc?.pageNumber ?? "N/M"}
         Content:
-          ${doc.pageContent}`;
+          ${payload.pageContent}`;
         })
         .join("\n\n");
 
-      // console.log(
-      //   relevantChunks.map((doc) => ({
-      //     content: doc.pageContent,
-      //     metadata: doc.metadata,
-      //   })),
-      // );
-
       context = `
-        Use the following retrieved context to answer the user's question.
-         Context: ${contextFromChunks}
-         Conversation History: ${formattedHistory}
+      You are a knowledge base assistant.
+
+      Answer the user's question using the retrieved document context below.
+
+Important rules:
+- Prioritize retrieved document context over conversation history.
+- Conversation history is only for understanding follow-up questions.
+- Do not treat previous assistant responses as factual document content.
+- If the answer is not present in the retrieved context, clearly say that.
+- Do not invent information. 
+
+RETRIEVED DOCUMENT CONTEXT: ${contextFromChunks}
+CONVERSATION HISTORY: ${formattedHistory}
         `;
     }
 

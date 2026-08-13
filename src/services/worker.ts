@@ -1,4 +1,4 @@
-import { tryCatch, Worker } from "bullmq";
+import { Worker } from "bullmq";
 import { RecursiveCharacterTextSplitter } from "@langchain/textsplitters";
 import { PDFLoader } from "@langchain/community/document_loaders/fs/pdf";
 import { TextLoader } from "@langchain/classic/document_loaders/fs/text";
@@ -11,9 +11,9 @@ import { createWriteStream } from "fs";
 import { mkdir } from "fs/promises";
 import { pipeline } from "stream/promises";
 import path from "path";
-import { embeddings, qdrantClient, storeToDb } from "./qdrant/connection";
+import { storeToDb } from "./qdrant/storeToQdrant";
 import { unlink } from "fs/promises";
-import crypto, { randomUUID } from "crypto";
+import { qdrantClient } from "./qdrant/connection";
 
 // Create a worker for the document queue
 const documentWorker = new Worker(
@@ -21,8 +21,7 @@ const documentWorker = new Worker(
   async (job) => {
     console.log("Processing job data");
     const { documentId } = job.data;
-    console.log("📄 Processing job:", job.id);
-    console.log("📦 Data:", job.data);
+
     let tempPath;
     try {
       const document = await prisma.document.findUnique({
@@ -131,21 +130,32 @@ const documentWorker = new Worker(
         },
       }));
 
-      //storing to db
-      console.log(
-        `Generating embeddings and uploading ${chunksWithMetadata.length} chunks to qdrant`,
-      );
+      // delete previous vectors for this document
+      await qdrantClient.delete("agent-sphere", {
+        wait: true,
+        filter: {
+          must: [
+            {
+              key: "metadata.documentId",
+              match: {
+                value: document.id,
+              },
+            },
+          ],
+        },
+      });
 
+      //storing to db
       const BATCH_SIZE = 10;
-      
+
       for (let i = 0; i < chunksWithMetadata.length; i += BATCH_SIZE) {
         const currentBatch = chunksWithMetadata.slice(i, i + BATCH_SIZE);
         console.log(
           `📡 Processing subset batch: chunks ${i} to ${Math.min(i + BATCH_SIZE, chunksWithMetadata.length)}...`,
         );
 
-        // Pass the safe sub-batch slice cleanly down to Langchain
-        await storeToDb(currentBatch);
+        await storeToDb(currentBatch, i);
+        // console.log(`Stored ${storedCount} vectors`);
 
         // Introduce a minor delay (e.g. 500ms) to allow the API limits window to settle down smoothly
         await new Promise((resolve) => setTimeout(resolve, 800));
