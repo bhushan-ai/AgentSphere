@@ -160,12 +160,12 @@ export const createAgent = async (
     }
 
     // Validate Providers
-    const validProviders = ["OPENAI", "GEMINI", "GROQ", "ANTHROPIC"];
+    const validProviders = ["OPENAI", "GEMINI", "GROK", "ANTHROPIC"];
 
     if (!validProviders.includes(provider)) {
       res.status(400).json({
         message:
-          "Invalid provider value. Must be one of: OPENAI, GEMINI, GROQ, ANTHROPIC",
+          "Invalid provider value. Must be one of: OPENAI, GEMINI, GROK, ANTHROPIC",
       });
       return;
     }
@@ -272,12 +272,12 @@ export const updateAgent = async (
     }
 
     // Validate Providers
-    const validProviders = ["OPENAI", "GEMINI", "GROQ", "ANTHROPIC"];
+    const validProviders = ["OPENAI", "GEMINI", "GROK", "ANTHROPIC"];
 
     if (provider && !validProviders.includes(provider)) {
       res.status(400).json({
         message:
-          "Invalid provider value. Must be one of: OPENAI, GEMINI, GROQ, ANTHROPIC",
+          "Invalid provider value. Must be one of: OPENAI, GEMINI, GROK, ANTHROPIC",
       });
       return;
     }

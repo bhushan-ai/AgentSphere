@@ -3,6 +3,7 @@ import { prisma } from "../lib/prisma";
 import { requireWorkspaceRole } from "../middleware/checkRole";
 import { QdrantVectorStore } from "@langchain/qdrant";
 import { ai, embeddings, qdrantClient } from "../services/qdrant/connection";
+import { aiGateway } from "../services/ai/ai.gateways";
 
 //send message
 export const sendMessage = async (
@@ -177,21 +178,15 @@ CONVERSATION HISTORY: ${formattedHistory}
     `;
 
     // //llm integration
-    const responseStream = await ai.models.generateContentStream({
+    const responseStream = await aiGateway.stream({
+      provider: agent.provider as "GEMINI" | "OPENAI" | "GROK",
       model: agent.model,
-      config: {
-        systemInstruction: agent.systemPrompt,
-        temperature: agent.temperature,
-      },
-
-      contents: [
+      systemPrompt: agent.systemPrompt,
+      temperature: agent.temperature,
+      messages: [
         {
           role: "user",
-          parts: [
-            {
-              text: `${prompt} `,
-            },
-          ],
+          content: prompt,
         },
       ],
     });
@@ -201,12 +196,9 @@ CONVERSATION HISTORY: ${formattedHistory}
     res.status(200);
     res.setHeader("Content-Type", "text/plain; charset=utf-8");
 
-    for await (const chunks of responseStream) {
-      const text = chunks.text;
-      if (text) {
-        assistantContent += text;
-        res.write(text);
-      }
+    for await (const text of responseStream) {
+      assistantContent += text;
+      res.write(text);
     }
 
     await prisma.message.create({

@@ -367,20 +367,29 @@ export const deleteDocument = async (req: Request, res: Response) => {
     if (!document) {
       res.status(404).json({
         success: false,
-        message: "document not found ",
+        message: "Document not found",
+      });
+      return;
+    }
+
+    if (!document.knowledgeBase) {
+      res.status(500).json({
+        success: false,
+        message: "Document knowledge base not found",
       });
       return;
     }
 
     //check role
     await requireWorkspaceRole(
-      document.knowledgeBase?.agent.workspaceId,
+      document.knowledgeBase.agent.workspaceId,
       userId,
       ["OWNER", "ADMIN", "MEMBER"],
     );
 
     //deleting doc from qdrant
     await qdrantClient.delete("agent-sphere", {
+      wait:true,
       filter: {
         must: [
           {

@@ -134,7 +134,7 @@ enum WorkspaceRole {
 enum AIProvider {
   OPENAI
   GEMINI
-  GROQ
+  GROK
   ANTHROPIC
 }
 

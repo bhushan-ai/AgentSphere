@@ -1,4 +1,3 @@
-import { QdrantVectorStore } from "@langchain/qdrant";
 import { GoogleGenerativeAIEmbeddings } from "@langchain/google-genai";
 import { QdrantClient } from "@qdrant/js-client-rest";
 import { GoogleGenAI } from "@google/genai";
